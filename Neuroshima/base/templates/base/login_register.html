@@ -1,0 +1,27 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<div>
+    <form method="POST" action="">
+        {% csrf_token %}
+
+            {% if login_error != None %}
+                <p>{{login_error}}</p>
+            {% endif %}
+        <label>Login</label>
+        <input type="text" name="username" placeholder="Wpisz nazwę użytkownika" />
+
+        <label>Hasło</label>
+        <input type="password" name="password" placeholder="Podaj hasło" />
+
+        <input type="submit" value="login" />
+
+    </form>
+
+    <p>Nie posiadasz konta?</p>
+    <a>Zarejestruj się!</a>
+
+</div>
+
+{% endblock content %}

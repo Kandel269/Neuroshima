@@ -1,2 +1,16 @@
 
-<h2>Pasek Nawigacji</h2>
+<h2><a href = "{% url 'home' %}">Strona Główna</a></h2>
+
+{% if request.user.is_authenticated %}
+
+<h3>wyloguj</h3>
+
+{% else %}
+
+<h3>
+    <a href = "{% url 'login_register' %}">zaloguj</a>
+</h3>
+
+{% endif %}
+
+<hr>
