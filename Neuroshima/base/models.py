@@ -17,3 +17,12 @@ class Tournaments(models.Model):
 
     def __str__(self):
         return self.name
+
+class Scores(models.Model):
+    user = models.ForeignKey(User, on_delete= models.SET_NULL, null = True)
+    game = models.ForeignKey(Tournaments, on_delete= models.CASCADE)
+    big_points = models.IntegerField()
+    small_points = models.IntegerField()
+    win_count = models.IntegerField()
+    draw_count = models.IntegerField()
+    lose_count = models.IntegerField()

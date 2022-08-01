@@ -2,10 +2,18 @@
 
 {% block content %}
 
-    <h3><strong>{{ tournament.name }}</strong></h3><br>
+<style>
+    .home-container{
+        display: grid;
+        grid-template-columns: 1fr 3fr 1fr;
+    }
+</style>
 
-    <h4>Uczestnicy:</h4>
+
+<div class="home-container">
+
     <div>
+        <h4>Uczestnicy:</h4>
         {% for participant in participants %}
 
             {{ participant.username }}
@@ -13,5 +21,15 @@
 
         {% endfor %}
     </div>
+
+    <div>
+        <h2><strong>{{ tournament.name }}</strong></h2><br>
+    </div>
+
+    <div>
+        xdd
+    </div>
+
+</div>
 
 {% endblock content %}
