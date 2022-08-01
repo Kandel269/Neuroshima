@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
-class Tournament(models.Model):
+class Tournaments(models.Model):
     host = models.ForeignKey(User, on_delete = models.SET_NULL, null = True)
     name = models.CharField(max_length = 200)
     # edition =

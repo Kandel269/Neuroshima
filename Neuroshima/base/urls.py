@@ -8,4 +8,6 @@ urlpatterns = [
     path('rejestracja/', views.registerPage, name = 'register'),
     path('wylogowanie/', views.logoutUser, name = 'logout'),
 
+    path('turniej/<str:pk>/', views.tournament, name = 'tournament'),
+
 ]

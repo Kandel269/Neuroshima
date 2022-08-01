@@ -1,0 +1,17 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+    <h3><strong>{{ tournament.name }}</strong></h3><br>
+
+    <h4>Uczestnicy:</h4>
+    <div>
+        {% for participant in participants %}
+
+            {{ participant.username }}
+            <br>
+
+        {% endfor %}
+    </div>
+
+{% endblock content %}

@@ -4,6 +4,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 
+from .models import Tournaments
+
 
 
 # Create your views here.
@@ -57,6 +59,17 @@ def logoutUser(request):
     return redirect('home')
 
 def home(request):
-    context = {}
+    tournaments = Tournaments.objects.all()
+    context = {'tournaments': tournaments}
     return render(request, 'base/home.html', context)
+
+def tournament(request, pk):
+    tournament = Tournaments.objects.get(id=pk)
+    participants = tournament.participants.all()
+
+    # if request.method == "POST":
+    #     return redirect('tournament',pk = tournament.id)
+
+    context = {'tournament':tournament,'participants':participants}
+    return render(request, 'base/tournament.html', context)
 

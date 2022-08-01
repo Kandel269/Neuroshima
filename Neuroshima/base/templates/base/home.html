@@ -2,8 +2,16 @@
 
 {% block content %}
 
-<h1>XD</h1>
 
 
+{% for tournament in tournaments %}
+    <div>
+        <h3><strong><a href = "{% url 'tournament' tournament.id %}"> {{ tournament.name }} </a></strong></h3>
+        <br>
+        {{ tournament.description }}
+    </div>
+    <hr>
+
+{% endfor %}
 
 {% endblock content %}
