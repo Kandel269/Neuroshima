@@ -2,14 +2,16 @@
 <h2><a href = "{% url 'home' %}">Strona Główna</a></h2>
 
 {% if request.user.is_authenticated %}
+<h3> Witaj Lordzie {{ user.username }} </h3>
+<h4><a href = "{% url 'home' %}"> Twój Profil Lorda </a></h4>
+<h4><a href = "{% url 'logout' %}">wyloguj</a></h4>
 
-<h3>wyloguj</h3>
 
 {% else %}
 
-<h3>
-    <a href = "{% url 'login_register' %}">zaloguj</a>
-</h3>
+<h4>
+    <a href = "{% url 'login' %}">zaloguj</a>
+</h4>
 
 {% endif %}
 
