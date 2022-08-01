@@ -10,4 +10,6 @@ urlpatterns = [
 
     path('turniej/<str:pk>/', views.tournament, name = 'tournament'),
 
+    path('stworz-turniej/', views.create_tournament, name = 'create_tournament')
+
 ]

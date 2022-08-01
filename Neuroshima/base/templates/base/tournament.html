@@ -28,15 +28,29 @@
         </div>
 
         <div>
+            <table>
+                <tr>
+                    <td><strong>Nazwa zawodnika</strong></td>
+                    <td><strong>Liczba zwycięstw</strong></td>
+                    <td><strong>Liczba remisów</strong></td>
+                    <td><strong>Liczba porażek</strong></td>
+                    <td></td>
+                    <td><strong>Duże punkty</strong></td>
+                    <td><strong>Małe punkty</strong></td>
+
+                </tr>
             {% for score in scores %}
-
-                {{ score.user.username }}
-                {{ score.win_count }}
-                {{ score.draw_count }}
-                {{ score.lose_count }}
-
-
+                <tr>
+                    <td>{{ score.user.username }}</td>
+                    <td>{{ score.win_count }}</td>
+                    <td>{{ score.draw_count }}</td>
+                    <td>{{ score.lose_count }}</td>
+                    <td></td>
+                    <td>{{ score.big_points }}</td>
+                    <td>{{ score.small_points }}</td>
+                </tr>
             {% endfor %}
+            </table>
         </div>
     </div>
 

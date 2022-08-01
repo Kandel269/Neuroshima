@@ -26,3 +26,4 @@ class Scores(models.Model):
     win_count = models.IntegerField()
     draw_count = models.IntegerField()
     lose_count = models.IntegerField()
+
