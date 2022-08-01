@@ -23,7 +23,21 @@
     </div>
 
     <div>
-        <h2><strong>{{ tournament.name }}</strong></h2><br>
+        <div>
+            <h2><strong>{{ tournament.name }}</strong></h2><br>
+        </div>
+
+        <div>
+            {% for score in scores %}
+
+                {{ score.user.username }}
+                {{ score.win_count }}
+                {{ score.draw_count }}
+                {{ score.lose_count }}
+
+
+            {% endfor %}
+        </div>
     </div>
 
     <div>

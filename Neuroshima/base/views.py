@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 
-from .models import Tournaments
+from .models import Tournaments, Scores
 
 
 
@@ -66,10 +66,11 @@ def home(request):
 def tournament(request, pk):
     tournament = Tournaments.objects.get(id=pk)
     participants = tournament.participants.all()
+    scores = tournament.scores_set.all()
 
     # if request.method == "POST":
     #     return redirect('tournament',pk = tournament.id)
 
-    context = {'tournament':tournament,'participants':participants}
+    context = {'tournament':tournament,'participants':participants,'scores':scores}
     return render(request, 'base/tournament.html', context)
 
