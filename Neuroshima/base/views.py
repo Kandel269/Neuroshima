@@ -75,7 +75,7 @@ def tournament(request, pk):
     context = {'tournament':tournament,'participants':participants,'scores':scores}
     return render(request, 'base/tournament.html', context)
 
-@login_required()
+@login_required(login_url='login')
 def create_tournament(request):
     form = TournamentForm()
     if request.method == "POST":
@@ -84,6 +84,6 @@ def create_tournament(request):
             form.save()
             return redirect('home')
 
-    context = {}
+    context = {'form':form}
     return render(request, 'base/tournament_form.html', context)
 
