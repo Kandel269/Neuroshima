@@ -4,4 +4,4 @@ from django.forms import ModelForm
 class TournamentForm(ModelForm):
     class Meta:
         model = Tournaments
-        fields = '__all__'
+        fields = ['name','description','rules']

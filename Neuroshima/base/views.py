@@ -81,7 +81,9 @@ def create_tournament(request):
     if request.method == "POST":
         form = TournamentForm(request.POST)
         if form.is_valid():
-            form.save()
+            add_host = form.save(commit = False)
+            add_host.host = request.user
+            add_host.save()
             return redirect('home')
 
     context = {'form':form}
