@@ -1,0 +1,12 @@
+{% extends 'main_your_profile' %}
+
+{% block content_your_profile %}
+
+<div>
+    {% for tournament in tournaments %}
+        {{ tournament.name }}
+
+    {% endfor %}
+</div>
+
+{% endblock content_your_profile %}

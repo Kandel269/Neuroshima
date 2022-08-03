@@ -1,0 +1,27 @@
+{% include 'navbar.html' %}
+
+<style>
+    .home-container{
+        display: grid;
+        grid-template-columns: 1fr 3fr 1fr;
+    }
+</style>
+
+
+<div class="home-container">
+    <div>
+        <br>
+        Twoje Statystyki <br>
+        <a>Twoje Turnieje</a>
+        <br> <br>
+        Stworz turniej
+        <br> <br>
+        Ustawienia
+    </div>
+
+    {% block content_your_profile %}
+
+
+    {% endblock content_your_profile %}
+
+</div>

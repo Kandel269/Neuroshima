@@ -95,3 +95,16 @@ def rules(request, pk):
     context = {'tournament':tournament}
     return render(request, 'tournament/rules.html', context)
 
+@login_required(login_url='login')
+def your_profile(request):
+    actuall_user = request.user
+    context = {'actuall_user':actuall_user}
+    return render(request, 'profile/your_profile.html', context)
+
+@login_required(login_url='login')
+def your_tournament(request):
+    actuall_user = request.user
+    tournaments = Tournaments.objects.get(participants = actuall_user)
+    context = {'actuall_user':actuall_user,'tournaments': tournaments}
+
+    return render(request, 'profile/your_tournaments.html', context)

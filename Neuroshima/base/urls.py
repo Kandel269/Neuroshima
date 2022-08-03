@@ -12,4 +12,6 @@ urlpatterns = [
     path('stworz-turniej/', views.create_tournament, name = 'create_tournament'),
     path('zasady-turnieju/<str:pk>/', views.rules, name = 'rules'),
 
+    path('twoj-profil/', views.your_profile, name = 'your_profile'),
+
 ]

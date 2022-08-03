@@ -3,7 +3,7 @@
 
 {% if request.user.is_authenticated %}
 <h3> Witaj Lordzie {{ user.username }} </h3>
-<h4><a href = "{% url 'home' %}"> Twój Profil Lorda </a></h4>
+<h4><a href = "{% url 'your_profile' %}"> Twój Profil Lorda </a></h4>
 <h4><a href = "{% url 'logout' %}">wyloguj</a></h4>
 
 
