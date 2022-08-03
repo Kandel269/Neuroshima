@@ -73,7 +73,7 @@ def tournament(request, pk):
     #     return redirect('tournament',pk = tournament.id)
 
     context = {'tournament':tournament,'participants':participants,'scores':scores}
-    return render(request, 'base/tournament.html', context)
+    return render(request, 'tournament/tournament.html', context)
 
 @login_required(login_url='login')
 def create_tournament(request):
@@ -87,5 +87,11 @@ def create_tournament(request):
             return redirect('home')
 
     context = {'form':form}
-    return render(request, 'base/tournament_form.html', context)
+    return render(request, 'tournament/tournament_form.html', context)
+
+def rules(request, pk):
+    tournament = Tournaments.objects.get(id=pk)
+
+    context = {'tournament':tournament}
+    return render(request, 'tournament/rules.html', context)
 

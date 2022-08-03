@@ -9,7 +9,7 @@ urlpatterns = [
     path('wylogowanie/', views.logoutUser, name = 'logout'),
 
     path('turniej/<str:pk>/', views.tournament, name = 'tournament'),
-
-    path('stworz-turniej/', views.create_tournament, name = 'create_tournament')
+    path('stworz-turniej/', views.create_tournament, name = 'create_tournament'),
+    path('zasady-turnieju/<str:pk>/', views.rules, name = 'rules'),
 
 ]

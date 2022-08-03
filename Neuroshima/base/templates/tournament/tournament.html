@@ -1,27 +1,7 @@
-{% extends 'main.html' %}
+{% extends 'tournament/main_tournament.html' %}
 
-{% block content %}
-
-<style>
-    .home-container{
-        display: grid;
-        grid-template-columns: 1fr 3fr 1fr;
-    }
-</style>
-
-
-<div class="home-container">
-
-    <div>
-        <h4>Założyciel: {{ tournament.host }}</h4>
-        <br>
-        <h4>Zasady</h4>
-        <h4>Historia pojedynków</h4>
-        <h4>Statystyki</h4>
-        <h4>Poprzednie edycje</h4>
-    </div>
-
-    <div>
+{%  block tournament_content %}
+<div>
         <div>
             <h2><strong>{{ tournament.name }}</strong></h2><br>
         </div>
@@ -51,12 +31,5 @@
             {% endfor %}
             </table>
         </div>
-    </div>
-
-    <div>
-        xdd
-    </div>
-
 </div>
-
-{% endblock content %}
+{%  endblock tournament_content %}
