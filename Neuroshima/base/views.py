@@ -102,9 +102,9 @@ def your_profile(request):
     return render(request, 'profile/your_profile.html', context)
 
 @login_required(login_url='login')
-def your_tournament(request):
+def your_tournaments(request):
     actuall_user = request.user
-    tournaments = Tournaments.objects.get(participants = actuall_user)
+    tournaments = Tournaments.objects.filter(participants = actuall_user)
     context = {'actuall_user':actuall_user,'tournaments': tournaments}
 
     return render(request, 'profile/your_tournaments.html', context)

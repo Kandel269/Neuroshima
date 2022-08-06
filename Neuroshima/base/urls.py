@@ -13,5 +13,6 @@ urlpatterns = [
     path('zasady-turnieju/<str:pk>/', views.rules, name = 'rules'),
 
     path('twoj-profil/', views.your_profile, name = 'your_profile'),
+    path('twoj-profil/twoje-turnieje/', views.your_tournaments, name ='your_tournaments'),
 
 ]

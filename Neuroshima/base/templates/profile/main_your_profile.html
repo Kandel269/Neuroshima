@@ -12,11 +12,12 @@
     <div>
         <br>
         Twoje Statystyki <br>
-        <a>Twoje Turnieje</a>
-        <br> <br>
-        Stworz turniej
-        <br> <br>
-        Ustawienia
+        <a href ="{% url 'your_tournaments' %}">Twoje Turnieje</a> <br>
+        Zakończone turnieje <br>
+        <br>
+        <a href ="{% url 'create_tournament' %}">Stworz turniej </a><br>
+        <br>
+        Ustawienia <br>
     </div>
 
     {% block content_your_profile %}

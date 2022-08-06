@@ -1,10 +1,13 @@
-{% extends 'main_your_profile' %}
+{% extends 'profile/main_your_profile.html' %}
 
 {% block content_your_profile %}
 
 <div>
+    <br>
     {% for tournament in tournaments %}
-        {{ tournament.name }}
+    <h3><a href="{% url 'tournament' tournament.id %}">{{ tournament.name }}</a></h3>
+    {{ tournament.description }}
+    <br> <br>
 
     {% endfor %}
 </div>
