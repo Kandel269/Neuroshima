@@ -36,9 +36,9 @@ class Scores(models.Model):
     lose_count = models.IntegerField()
 
 class Duels(models.Model):
-    tournament = models.ForeignKey(Tournaments, on_delete= models.SET_NULL, null = True)
-    user = models.ManyToManyField(User)
+    tournament = models.ForeignKey(Tournaments, on_delete= models.SET_NULL, null = True, blank = True)
+    user = models.ForeignKey(User, on_delete= models.SET_NULL, null = True, blank = True)
     army = models.ManyToManyField(Armies)
     hp = models.IntegerField()
-    enemy = models.IntegerField()
+    enemy = models.IntegerField(null = True, blank = True)
 

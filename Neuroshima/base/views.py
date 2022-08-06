@@ -113,11 +113,19 @@ def your_tournaments(request):
 def add_result(request, pk):
     tournament = Tournaments.objects.get(id = pk)
     form = DuelsForm()
+    form2 = DuelsForm()
     if request.method == "POST":
         form = DuelsForm(request.POST)
-        if form.is_valid():
-            form.save()
+        form2 = DuelsForm(request.POST)
+        if form.is_valid() and form2.is_valid():
+            add_variables = form.save(commit = False)
+            add_variables.user = request.user
+            add_variables.tournament = tournament
+            add_variables.save()
+            add_variables2 = form2.save(commit = False)
+            add_variables2.tournament = tournament
+            form2.save()
             return redirect('home')
 
-    context = {'form':form,'tournament':tournament}
+    context = {'form':form,'form2':form2,'tournament':tournament}
     return render(request, 'tournament/add_result.html', context)
