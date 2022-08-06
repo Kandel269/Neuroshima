@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
@@ -55,6 +56,7 @@ def registerPage(request):
     context = {'form': form}
     return render(request, 'base/login_register.html', context)
 
+@login_required(login_url='login')
 def logoutUser(request):
     logout(request)
     return redirect('home')
@@ -88,6 +90,23 @@ def create_tournament(request):
 
     context = {'form':form}
     return render(request, 'tournament/tournament_form.html', context)
+
+@login_required(login_url='login')
+def update_tournmanet(request, pk):
+    tournament =Tournaments.objects.get(id = pk)
+    form = TournamentForm(instance = tournament)
+
+    if request.user !=tournament.host:
+        return HttpResponse('Mama ci nie pozwoliła!')
+
+    if request.metod == "POST":
+        form = TournamentForm(request.POST, instance = tournament)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+
+    context = {'form': form}
+    return render(request, 'cosik', context)
 
 def rules(request, pk):
     tournament = Tournaments.objects.get(id=pk)
