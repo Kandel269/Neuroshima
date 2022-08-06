@@ -6,7 +6,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 
 from .models import Tournaments, Scores
-from .forms import TournamentForm
+from .forms import TournamentForm, DuelsForm
 
 
 # Create your views here.
@@ -108,3 +108,16 @@ def your_tournaments(request):
     context = {'actuall_user':actuall_user,'tournaments': tournaments}
 
     return render(request, 'profile/your_tournaments.html', context)
+
+@login_required(login_url='login')
+def add_result(request, pk):
+    tournament = Tournaments.objects.get(id = pk)
+    form = DuelsForm()
+    if request.method == "POST":
+        form = DuelsForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+
+    context = {'form':form,'tournament':tournament}
+    return render(request, 'tournament/add_result.html', context)

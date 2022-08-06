@@ -8,6 +8,9 @@ class Armies(models.Model):
     name = models.CharField(max_length=255)
     # tiles = models.ExpressionList
 
+    def __str__(self):
+        return self.name
+
 class Tournaments(models.Model):
     host = models.ForeignKey(User, on_delete = models.SET_NULL, null = True)
     name = models.CharField(max_length = 200)
