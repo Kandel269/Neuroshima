@@ -12,6 +12,12 @@
         {{ form.hp }}
 
         <p>Wynik przeciwnika:</p> <br>
+        <p>Twoj przeciwnik:</p>
+        {% for participant in participants %}
+            {% if participant != request.user %}
+                {{ participant }} <br>
+            {% endif %}
+        {% endfor %}
         <p>Armia jaką gral:</p>
         {{ form2.army }}
         <br>

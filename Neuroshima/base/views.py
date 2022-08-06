@@ -112,6 +112,7 @@ def your_tournaments(request):
 @login_required(login_url='login')
 def add_result(request, pk):
     tournament = Tournaments.objects.get(id = pk)
+    participants = tournament.participants.all()
     form = DuelsForm()
     form2 = DuelsForm()
     if request.method == "POST":
@@ -127,5 +128,5 @@ def add_result(request, pk):
             form2.save()
             return redirect('home')
 
-    context = {'form':form,'form2':form2,'tournament':tournament}
+    context = {'form':form,'form2':form2,'tournament':tournament,'participants':participants}
     return render(request, 'tournament/add_result.html', context)
