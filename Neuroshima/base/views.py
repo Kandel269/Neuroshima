@@ -115,6 +115,13 @@ def add_result(request, pk):
     participants = tournament.participants.all()
     form = DuelsForm()
     form2 = DuelsForm()
+    enemy_user_list = []
+
+    for participant in range(len(participants)):
+        if participants[participant] != request.user:
+            enemy_user_list.append((str(participant), participants[participant]))
+    form2.fields['user'].choices = enemy_user_list
+
     if request.method == "POST":
         form = DuelsForm(request.POST)
         form2 = DuelsForm(request.POST)
