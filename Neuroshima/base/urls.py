@@ -15,5 +15,6 @@ urlpatterns = [
     path('twoj-profil/', views.your_profile, name = 'your_profile'),
     path('twoj-profil/twoje-turnieje/', views.your_tournaments, name ='your_tournaments'),
     path('twoj-profil/stworz-turniej/', views.create_tournament, name='create_tournament'),
+    path('twoj-profil/historia-pojedynkow/', views.history_of_duels, name='history_of_duels'),
 
 ]

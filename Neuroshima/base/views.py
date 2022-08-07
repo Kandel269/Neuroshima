@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 
-from .models import Tournaments, Scores
+from .models import Tournaments, Scores, Duels
 from .forms import TournamentForm, DuelsForm
 
 
@@ -146,13 +146,32 @@ def add_result(request, pk):
         form2 = DuelsForm(request.POST)
         if form.is_valid() and form2.is_valid():
             add_variables = form.save(commit = False)
+            add_variables2 = form2.save(commit = False)
+
             add_variables.user = request.user
             add_variables.tournament = tournament
             add_variables.save()
-            add_variables2 = form2.save(commit = False)
+
+            # id_1 = add_variables.id
+
+
             add_variables2.tournament = tournament
-            form2.save()
+            # add_variables2.enemy = id_1
+            add_variables2.save()
+
+            # id_2 = add_variables2.id
+            #
+            # add_variables.enemy = id_2
+            # add_variables.save()
+
             return redirect('home')
 
     context = {'form':form,'form2':form2,'tournament':tournament,'participants':participants}
     return render(request, 'tournament/add_result.html', context)
+
+@login_required(login_url='login')
+def history_of_duels(request):
+    duels = Duels.objects.filter(user = request.user)
+
+    context = {'duels':duels}
+    return render(request, 'profile/history_of_duels.html',context)
