@@ -6,19 +6,19 @@
         {% csrf_token %}
         <p>Twoj wynik:</p> <br>
         <p>Armia jaka grales:</p>
-        {{ form.army }}
+        {{ form.enemy_army }}
         <br>
         <p>Hp twojego sztabu:</p> <br>
-        {{ form.hp }}
+        {{ form.enemy_hp }}
         <br> <br><hr><br> <br>
         <p>Wynik przeciwnika:</p> <br>
         <p>Twoj przeciwnik:</p>
-        {{ form2.user }}
+        {{ form.user }}
         <p>Armia jaką gral:</p>
-        {{ form2.army }}
+        {{ form.army }}
         <br>
         <p>Hp jego sztabu:</p> <br>
-        {{ form2.hp }}
+        {{ form.hp }}
         <input type="submit" value="Submit"/>
     </form>
 </div>

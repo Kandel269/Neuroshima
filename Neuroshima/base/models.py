@@ -40,5 +40,6 @@ class Duels(models.Model):
     user = models.ForeignKey(User, on_delete= models.SET_NULL, null = True, blank = True)
     army = models.ForeignKey(Armies, on_delete= models.SET_NULL, null = True)
     hp = models.IntegerField()
-    enemy = models.IntegerField(null = True, blank = True)
-
+    enemy_id = models.IntegerField(null = True, blank = True)
+    enemy_army = models.CharField(max_length=255, choices = [("1",'Troglo'),('2',"zombi")])
+    enemy_hp = models.IntegerField()

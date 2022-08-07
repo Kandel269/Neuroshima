@@ -10,4 +10,4 @@ class TournamentForm(ModelForm):
 class DuelsForm(ModelForm):
     class Meta:
         model = Duels
-        fields = ['user','army','hp','enemy']
+        fields = ['user','army','hp','enemy_id','enemy_army','enemy_hp']

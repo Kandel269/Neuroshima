@@ -133,40 +133,27 @@ def add_result(request, pk):
     tournament = Tournaments.objects.get(id = pk)
     participants = tournament.participants.all()
     form = DuelsForm()
-    form2 = DuelsForm()
+
     enemy_user_list = []
 
-    for participant in range(len(participants)):
-        if participants[participant] != request.user:
-            enemy_user_list.append((str(participant), participants[participant]))
-    form2.fields['user'].choices = enemy_user_list
+    for participant in participants:
+        if participant != request.user:
+            enemy_user_list.append((participant.id, participant))
+    form.fields['user'].choices = enemy_user_list
 
     if request.method == "POST":
         form = DuelsForm(request.POST)
-        form2 = DuelsForm(request.POST)
-        if form.is_valid() and form2.is_valid():
-            add_variables = form.save(commit = False)
-            add_variables2 = form2.save(commit = False)
 
-            add_variables.user = request.user
+        if form.is_valid():
+            add_variables = form.save(commit = False)
             add_variables.tournament = tournament
             add_variables.save()
 
-            # id_1 = add_variables.id
 
-
-            add_variables2.tournament = tournament
-            # add_variables2.enemy = id_1
-            add_variables2.save()
-
-            # id_2 = add_variables2.id
-            #
-            # add_variables.enemy = id_2
-            # add_variables.save()
 
             return redirect('home')
 
-    context = {'form':form,'form2':form2,'tournament':tournament,'participants':participants}
+    context = {'form':form,'tournament':tournament,'participants':participants}
     return render(request, 'tournament/add_result.html', context)
 
 @login_required(login_url='login')
