@@ -43,3 +43,5 @@ class Duels(models.Model):
     enemy_id = models.IntegerField(null = True, blank = True)
     enemy_army = models.CharField(max_length=255, choices = [("1",'Troglo'),('2',"zombi")])
     enemy_hp = models.IntegerField()
+
+

@@ -1,14 +1,16 @@
 {% extends 'profile/main_your_profile.html' %}
 
 {% block content_your_profile %}
+<div>
+    {% for duel in duel_list %}
 
-{% for duel in duels %}
-    <br>
-    {{ duel.tournament }} <br>
-    {{ duel.army }} <br>
-    {{ duel.hp }} <br>
-
-{% endfor %}
-
+            {% for player in duel %}
+                {{ player.user }} <br>
+                {{ player.army }} <br>
+                {{ player.hp }} <br><br>
+            {% endfor %}
+    <br> <hr> <br>
+    {% endfor %}
+</div>
 
 {% endblock content_your_profile %}

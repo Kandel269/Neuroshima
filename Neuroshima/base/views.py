@@ -6,11 +6,13 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 
-from .models import Tournaments, Scores, Duels
+from .models import Tournaments, Scores, Duels, Armies
 from .forms import TournamentForm, DuelsForm
 
 
 # Create your views here.
+
+def duel_list():
 
 def loginPage(request):
     page = "login"
@@ -133,7 +135,7 @@ def add_result(request, pk):
     tournament = Tournaments.objects.get(id = pk)
     participants = tournament.participants.all()
     form = DuelsForm()
-
+    armies_list = ["Troglo","zombi"]
     enemy_user_list = []
 
     for participant in participants:
@@ -147,9 +149,20 @@ def add_result(request, pk):
         if form.is_valid():
             add_variables = form.save(commit = False)
             add_variables.tournament = tournament
+            add_variables.enemy_id = 0
             add_variables.save()
 
 
+            form_for_player = DuelsForm()
+            add_variables_for_player = form_for_player.save(commit = False)
+            add_variables_for_player.tournament = tournament
+            add_variables_for_player.user = request.user
+            add_variables_for_player.army = Armies.objects.get(name = armies_list[int(add_variables.enemy_army)-1])
+            add_variables_for_player.hp = add_variables.enemy_hp
+            add_variables_for_player.enemy_id = add_variables.id
+            add_variables_for_player.enemy_army = add_variables.army.name
+            add_variables_for_player.enemy_hp = add_variables.hp
+            add_variables_for_player.save()
 
             return redirect('home')
 
@@ -159,6 +172,14 @@ def add_result(request, pk):
 @login_required(login_url='login')
 def history_of_duels(request):
     duels = Duels.objects.filter(user = request.user)
+    duel_list = []
+    for duel in duels:
+        if duel.enemy_id != 0:
+            duel_my_enemy = Duels.objects.get(id = str(duel.enemy_id))
+            duel_list.append([duel,duel_my_enemy])
+        else:
+            duel_my_enemy = Duels.objects.get(enemy_id = duel.id)
+            duel_list.append([duel,duel_my_enemy])
 
-    context = {'duels':duels}
+    context = {'duels':duels,'duel_list':duel_list}
     return render(request, 'profile/history_of_duels.html',context)
