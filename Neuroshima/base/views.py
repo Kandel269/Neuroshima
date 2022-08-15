@@ -237,3 +237,9 @@ def tournaments_duels(request, pk):
 
     context = {'duels_player_list':duels_player_list,'tournament':tournament}
     return render(request, 'tournament/duels.html', context)
+
+def host_tournaments(request):
+    tournaments = Tournaments.objects.filter(host = request.user)
+
+    context = {'tournaments': tournaments}
+    return render(request, "profile/host_tournament.html" ,context)

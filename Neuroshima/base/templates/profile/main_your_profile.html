@@ -13,12 +13,13 @@
         <br>
         <p>Statystyki</p>
         <p><a href ="{% url 'history_of_duels' %}">Historia pojedynkow</a></p>
-        <a href ="{% url 'your_tournaments' %}">Twoje Turnieje</a> <br>
+        <p><a href ="{% url 'your_tournaments' %}">Twoje Turnieje</a> </p>
         <p>Zakończone turnieje<p>
         <br>
-        <a href ="{% url 'create_tournament' %}">Stworz turniej </a><br>
+        <p></p><a href ="{% url 'create_tournament' %}">Stworz turniej </a></p>
+        <p><a href = "{% url 'host_tournaments' %}">Gospodarz Turniejów</a></p>
         <br>
-        Ustawienia <br>
+        <p>Ustawienia</p>
     </div>
 
     {% block content_your_profile %}
