@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 
-from .models import Tournaments, Scores, Duels, Armies
+from .models import Tournaments, Duels, Armies, DuelUser
 from .forms import TournamentForm, DuelsUserForm
 
 
@@ -151,25 +151,27 @@ def add_result(request, pk):
             enemy = form.cleaned_data.get("user")
             army = form.cleaned_data.get("army")
             my_army = form.cleaned_data.get("my_army")
-            print(my_army)
-            print(my_army)
-            print(my_army)
-            print(my_army)
-            print(type(my_army))
-            print(type(my_army))
-            print(type(my_army))
-            print(type(my_army))
+
             new_duel = Duels.objects.create(tournament = tournament, winner = "", hp_gap = 0)
             if my_hp > hp:
                 new_duel.hp_gap = int(my_hp) - int(hp)
-                new_duel.winner = str(request.user)
+                new_duel.winner = str(request.user.username)
             elif my_hp < hp:
                 new_duel.hp_gap = int(hp) - int(my_hp)
-                new_duel.winner = str(enemy)
+                new_duel.winner = str(enemy.username)
             else:
                 new_duel.hp_gap = 0
                 new_duel.winner = "draw"
 
+
+            my_army_obj = Armies.objects.get(name = my_army)
+            owner_duel_user = DuelUser.objects.create(user = request.user, army = my_army_obj, hp = my_hp)
+            enemy_duel_user = DuelUser.objects.create(user = enemy, army = army, hp = hp)
+
+            new_duel.users.add(owner_duel_user)
+            new_duel.users.add(enemy_duel_user)
+
+            new_duel.save()
 
             return redirect('home')
 
