@@ -2,7 +2,20 @@
 
 {% block content_your_profile %}
 <div>
-
+    <div>
+        {% for players in duels_player_list %}
+            <table>
+                {% for player in players %}
+                    <tr><td><strong>Gracz - {{ player.user.username }}</strong></td></tr>
+                    <tr><td>Armia - {{ player.army }}</td></tr>
+                    <tr><td>HP Sztabu - {{ player.hp }}</td></tr>
+                    <tr></tr>
+                {% endfor %}
+                <tr></tr>
+            </table>
+            <br> <hr> <br>
+        {% endfor %}
+    </div>
 </div>
 
 {% endblock content_your_profile %}

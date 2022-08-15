@@ -14,9 +14,11 @@
 
     <div>
         <h4>Założyciel: {{ tournament.host }}</h4>
-        <br>
+        <p><a href = "{% url 'tournament' tournament.id %}">Tablica wyników</a></p>
+
+        <br> <br>
         <h4><a href = "{% url 'rules' tournament.id %}">Zasady</a></h4>
-        <h4>Historia pojedynków</h4>
+        <h4><a href = "{% url 'history_of_duels' tournament.id %}">Historia pojedynków</a></h4>
         <h4>Statystyki</h4>
         <h4>Poprzednie edycje</h4>
         <h4><a href = "{% url 'duel' tournament.id %}">Dodaj wynik</a></h4>

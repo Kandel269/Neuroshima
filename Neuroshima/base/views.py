@@ -71,13 +71,7 @@ def tournament(request, pk):
     participants = tournament.participants.all()
     duels = Duels.objects.filter(tournament = tournament)
     praticipant_score_list = []
-    duels_player_list = []
 
-    for duel in duels:
-        players = []
-        for player in duel.users.all():
-             players.append(player)
-        duels_player_list.append(players)
 
     for participant in participants:
         counter_win = 0
@@ -105,7 +99,7 @@ def tournament(request, pk):
         praticipant_score_list.append([participant.username,counter_win,counter_draw,counter_lose,counter_big_points,counter_small_points])
 
 
-    context = {'tournament':tournament,'participants':participants,'duels':duels,'praticipant_score_list':praticipant_score_list,'duels_player_list':duels_player_list}
+    context = {'tournament':tournament,'participants':participants,'duels':duels,'praticipant_score_list':praticipant_score_list}
     return render(request, 'tournament/tournament.html', context)
 
 @login_required(login_url='login')
@@ -211,5 +205,35 @@ def add_result(request, pk):
 
 @login_required(login_url='login')
 def history_of_duels(request):
-    context = {}
+    tournament = Tournaments.objects.all()
+    duels = Duels.objects.all()
+
+    duels_player_list = []
+
+    for duel in duels:
+        players = []
+        lock = 0
+        for player in duel.users.all():
+            players.append(player)
+            if player.user == request.user:
+                lock = 1
+        if lock == 1:
+            duels_player_list.append(players)
+
+    context = {'duels_player_list': duels_player_list, 'tournament': tournament}
     return render(request, 'profile/history_of_duels.html',context)
+
+def tournaments_duels(request, pk):
+    tournament = Tournaments.objects.get(id=pk)
+    duels = Duels.objects.filter(tournament = tournament)
+
+    duels_player_list = []
+
+    for duel in duels:
+        players = []
+        for player in duel.users.all():
+             players.append(player)
+        duels_player_list.append(players)
+
+    context = {'duels_player_list':duels_player_list,'tournament':tournament}
+    return render(request, 'tournament/duels.html', context)
