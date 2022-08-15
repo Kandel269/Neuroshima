@@ -1,25 +1,21 @@
 {% extends 'tournament/main_tournament.html' %}
 
 {% block tournament_content %}
+
 <div>
-    <form method = "POST" action = "">
+    <form method = "POST" action = "" >
         {% csrf_token %}
-        <p>Twoj wynik:</p> <br>
-        <p>Armia jaka grales:</p>
-        {{ form.enemy_army }}
         <br>
-        <p>Hp twojego sztabu:</p> <br>
-        {{ form.enemy_hp }}
-        <br> <br><hr><br> <br>
-        <p>Wynik przeciwnika:</p> <br>
-        <p>Twoj przeciwnik:</p>
-        {{ form.user }}
-        <p>Armia jaką gral:</p>
-        {{ form.army }}
-        <br>
-        <p>Hp jego sztabu:</p> <br>
-        {{ form.hp }}
-        <input type="submit" value="Submit"/>
+        <h3>Twoje statystyki</h3>
+        <p>Armia </p>
+        <p>HP sztabu: {{ form.my_hp }}</p>
+        <br><br>
+        <h3>Twój przeciwnik:</h3>
+        <p>Nazwa - {{ form.user }}</p>
+        <p>Armia - {{ form.army }}</p>
+        <p>HP Sztabu - {{ form.hp }}</p>
+        <input type = "submit" value = "Submit"/>
     </form>
 </div>
+
 {% endblock tournament_content %}

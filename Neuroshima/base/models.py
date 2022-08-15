@@ -35,14 +35,14 @@ class Scores(models.Model):
     draw_count = models.IntegerField()
     lose_count = models.IntegerField()
 
-
-class Duels(models.Model):
-    tournament = models.ForeignKey(Tournaments, on_delete= models.SET_NULL, null = True, blank = True)
+class DuelUser(models.Model):
     user = models.ForeignKey(User, on_delete= models.SET_NULL, null = True, blank = True)
     army = models.ForeignKey(Armies, on_delete= models.SET_NULL, null = True)
     hp = models.IntegerField()
-    enemy_id = models.IntegerField(null = True, blank = True)
-    enemy_army = models.CharField(max_length=255, choices = [("1",'Troglo'),('2',"zombi")])
-    enemy_hp = models.IntegerField()
 
+class Duels(models.Model):
+    tournament = models.ForeignKey(Tournaments, on_delete= models.SET_NULL, null = True, blank = True)
+    users = models.ManyToManyField(DuelUser, null = True, blank = True)
+    winner = models.CharField(max_length = 250, blank = True)
+    hp_gap = models.IntegerField()
 

@@ -2,15 +2,7 @@
 
 {% block content_your_profile %}
 <div>
-    {% for duel in duel_list %}
 
-            {% for player in duel %}
-               <p> Nazwa gracza: {{ player.user }} </p>
-               <p> Armia jaką grał: {{ player.army }} </p>
-               <p> Wytrzymałość sztabu: {{ player.hp }} </p><br>
-            {% endfor %}
-    <br> <hr> <br>
-    {% endfor %}
 </div>
 
 {% endblock content_your_profile %}

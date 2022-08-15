@@ -7,21 +7,10 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 
 from .models import Tournaments, Scores, Duels, Armies
-from .forms import TournamentForm, DuelsForm
+from .forms import TournamentForm, DuelsUserForm
 
 
 # Create your views here.
-
-def create_duel_list(duels):
-    duel_list = []
-    for duel in duels:
-        if duel.enemy_id != 0:
-            duel_my_enemy = Duels.objects.get(id=str(duel.enemy_id))
-            duel_list.append([duel, duel_my_enemy])
-        else:
-            duel_my_enemy = Duels.objects.get(enemy_id=duel.id)
-            duel_list.append([duel, duel_my_enemy])
-    return duel_list
 
 def loginPage(request):
     page = "login"
@@ -143,9 +132,8 @@ def your_tournaments(request):
 def add_result(request, pk):
     tournament = Tournaments.objects.get(id = pk)
     participants = tournament.participants.all()
-    form = DuelsForm()
-    armies_list = ["Troglo","zombi"]
     enemy_user_list = []
+    form = DuelsUserForm()
 
     for participant in participants:
         if participant != request.user:
@@ -153,35 +141,31 @@ def add_result(request, pk):
     form.fields['user'].choices = enemy_user_list
 
     if request.method == "POST":
-        form = DuelsForm(request.POST)
-
+        form = DuelsUserForm(request.POST)
         if form.is_valid():
-            add_variables = form.save(commit = False)
-            add_variables.tournament = tournament
-            add_variables.enemy_id = 0
-            add_variables.save()
+            my_hp = form.cleaned_data.get("my_hp")
+            hp = form.cleaned_data.get("hp")
+            enemy = form.cleaned_data.get("user")
+            army = form.cleaned_data.get("army")
 
+            new_duel = Duels.objects.create(tournament = tournament, winner = "", hp_gap = 0)
+            if my_hp > hp:
+                new_duel.hp_gap = int(my_hp) - int(hp)
+                new_duel.winner = str(request.user)
+            elif my_hp < hp:
+                new_duel.hp_gap = int(hp) - int(my_hp)
+                new_duel.winner = str(enemy)
+            else:
+                new_duel.hp_gap = 0
+                new_duel.winner = "draw"
 
-            form_for_player = DuelsForm()
-            add_variables_for_player = form_for_player.save(commit = False)
-            add_variables_for_player.tournament = tournament
-            add_variables_for_player.user = request.user
-            add_variables_for_player.army = Armies.objects.get(name = armies_list[int(add_variables.enemy_army)-1])
-            add_variables_for_player.hp = add_variables.enemy_hp
-            add_variables_for_player.enemy_id = add_variables.id
-            add_variables_for_player.enemy_army = add_variables.army.name
-            add_variables_for_player.enemy_hp = add_variables.hp
-            add_variables_for_player.save()
 
             return redirect('home')
 
-    context = {'form':form,'tournament':tournament,'participants':participants}
+    context = {"tournament": tournament, "form":form}
     return render(request, 'tournament/add_result.html', context)
 
 @login_required(login_url='login')
 def history_of_duels(request):
-    duels = Duels.objects.filter(user = request.user)
-    duel_list = create_duel_list(duels)
-
-    context = {'duels':duels,'duel_list':duel_list}
+    context = {}
     return render(request, 'profile/history_of_duels.html',context)
