@@ -71,6 +71,13 @@ def tournament(request, pk):
     participants = tournament.participants.all()
     duels = Duels.objects.filter(tournament = tournament)
     praticipant_score_list = []
+    duels_player_list = []
+
+    for duel in duels:
+        players = []
+        for player in duel.users.all():
+             players.append(player)
+        duels_player_list.append(players)
 
     for participant in participants:
         counter_win = 0
@@ -85,17 +92,20 @@ def tournament(request, pk):
                         counter_win += 1
                         counter_big_points += 1
                         counter_small_points += duel.hp_gap
+                        break
                     elif duel.winner == "draw":
                         counter_draw += 1
                         counter_big_points += 0.5
+                        break
                     else:
                         counter_lose += 1
                         counter_small_points -= duel.hp_gap
+                        break
 
         praticipant_score_list.append([participant.username,counter_win,counter_draw,counter_lose,counter_big_points,counter_small_points])
 
 
-    context = {'tournament':tournament,'participants':participants,'duels':duels,'praticipant_score_list':praticipant_score_list}
+    context = {'tournament':tournament,'participants':participants,'duels':duels,'praticipant_score_list':praticipant_score_list,'duels_player_list':duels_player_list}
     return render(request, 'tournament/tournament.html', context)
 
 @login_required(login_url='login')
