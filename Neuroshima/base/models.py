@@ -35,6 +35,7 @@ class Scores(models.Model):
     draw_count = models.IntegerField()
     lose_count = models.IntegerField()
 
+
 class Duels(models.Model):
     tournament = models.ForeignKey(Tournaments, on_delete= models.SET_NULL, null = True, blank = True)
     user = models.ForeignKey(User, on_delete= models.SET_NULL, null = True, blank = True)

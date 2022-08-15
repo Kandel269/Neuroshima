@@ -12,7 +12,16 @@ from .forms import TournamentForm, DuelsForm
 
 # Create your views here.
 
-def duel_list():
+def create_duel_list(duels):
+    duel_list = []
+    for duel in duels:
+        if duel.enemy_id != 0:
+            duel_my_enemy = Duels.objects.get(id=str(duel.enemy_id))
+            duel_list.append([duel, duel_my_enemy])
+        else:
+            duel_my_enemy = Duels.objects.get(enemy_id=duel.id)
+            duel_list.append([duel, duel_my_enemy])
+    return duel_list
 
 def loginPage(request):
     page = "login"
@@ -172,14 +181,7 @@ def add_result(request, pk):
 @login_required(login_url='login')
 def history_of_duels(request):
     duels = Duels.objects.filter(user = request.user)
-    duel_list = []
-    for duel in duels:
-        if duel.enemy_id != 0:
-            duel_my_enemy = Duels.objects.get(id = str(duel.enemy_id))
-            duel_list.append([duel,duel_my_enemy])
-        else:
-            duel_my_enemy = Duels.objects.get(enemy_id = duel.id)
-            duel_list.append([duel,duel_my_enemy])
+    duel_list = create_duel_list(duels)
 
     context = {'duels':duels,'duel_list':duel_list}
     return render(request, 'profile/history_of_duels.html',context)
