@@ -69,12 +69,33 @@ def home(request):
 def tournament(request, pk):
     tournament = Tournaments.objects.get(id=pk)
     participants = tournament.participants.all()
-    scores = tournament.scores_set.all()
+    duels = Duels.objects.filter(tournament = tournament)
+    praticipant_score_list = []
 
-    # if request.method == "POST":
-    #     return redirect('tournament',pk = tournament.id)
+    for participant in participants:
+        counter_win = 0
+        counter_draw = 0
+        counter_lose = 0
+        counter_big_points = 0
+        counter_small_points = 0
+        for duel in duels:
+            for player in duel.users.all():
+                if player.user == participant:
+                    if duel.winner == str(participant):
+                        counter_win += 1
+                        counter_big_points += 1
+                        counter_small_points += duel.hp_gap
+                    elif duel.winner == "draw":
+                        counter_draw += 1
+                        counter_big_points += 0.5
+                    else:
+                        counter_lose += 1
+                        counter_small_points -= duel.hp_gap
 
-    context = {'tournament':tournament,'participants':participants,'scores':scores}
+        praticipant_score_list.append([participant.username,counter_win,counter_draw,counter_lose,counter_big_points,counter_small_points])
+
+
+    context = {'tournament':tournament,'participants':participants,'duels':duels,'praticipant_score_list':praticipant_score_list}
     return render(request, 'tournament/tournament.html', context)
 
 @login_required(login_url='login')

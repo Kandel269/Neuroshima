@@ -13,20 +13,15 @@
                     <td><strong>Liczba zwycięstw</strong></td>
                     <td><strong>Liczba remisów</strong></td>
                     <td><strong>Liczba porażek</strong></td>
-                    <td></td>
                     <td><strong>Duże punkty</strong></td>
                     <td><strong>Małe punkty</strong></td>
 
                 </tr>
-            {% for score in scores %}
+            {% for participant in praticipant_score_list %}
                 <tr>
-                    <td>{{ score.user.username }}</td>
-                    <td>{{ score.win_count }}</td>
-                    <td>{{ score.draw_count }}</td>
-                    <td>{{ score.lose_count }}</td>
-                    <td></td>
-                    <td>{{ score.big_points }}</td>
-                    <td>{{ score.small_points }}</td>
+                    {% for score in participant %}
+                    <td>{{ score }}</td>
+                    {% endfor %}
                 </tr>
             {% endfor %}
             </table>
