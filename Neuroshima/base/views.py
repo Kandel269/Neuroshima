@@ -238,8 +238,28 @@ def tournaments_duels(request, pk):
     context = {'duels_player_list':duels_player_list,'tournament':tournament}
     return render(request, 'tournament/duels.html', context)
 
+@login_required(login_url='login')
 def host_tournaments(request):
     tournaments = Tournaments.objects.filter(host = request.user)
 
     context = {'tournaments': tournaments}
-    return render(request, "profile/host_tournament.html" ,context)
+    return render(request, "profile/host_tournament.html",context)
+
+def tournament_statistics(request,pk):
+    tournament = Tournaments.objects.get(id = pk)
+    duels = Duels.objects.filter(tournament=tournament)
+    armies = Armies.objects.all()
+    list_score_2D_armies = []
+
+    duels_player_list = []
+
+    for duel in duels:
+        players = []
+        for player in duel.users.all():
+             players.append(player)
+        duels_player_list.append(players)
+
+
+
+    context = {'tournament':tournament,'armies':armies}
+    return render(request, 'tournament/statistics.html', context)

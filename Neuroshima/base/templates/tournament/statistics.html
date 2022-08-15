@@ -1,0 +1,9 @@
+{% extends 'tournament/main_tournament.html' %}
+
+{% block tournament_content %}
+<div>
+    {% for army in armies %}
+       <p>{{ army }}</p>
+    {% endfor %}
+</div>
+{% endblock tournament_content %}

@@ -12,6 +12,7 @@ urlpatterns = [
     path('turniej/<str:pk>/zasady-turnieju/', views.rules, name = 'rules'),
     path('turniej/<str:pk>/dodaj-wynik/', views.add_result ,name = 'duel'),
     path('turniej/<str:pk>/historia-pojedynków/', views.tournaments_duels ,name = 'history_of_duels'),
+    path('turniej/<str:pk>/statystyki/', views.tournament_statistics ,name = 'tournament_statistics'),
 
     path('twoj-profil/', views.your_profile, name = 'your_profile'),
     path('twoj-profil/twoje-turnieje/', views.your_tournaments, name ='your_tournaments'),
