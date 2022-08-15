@@ -132,6 +132,7 @@ def your_tournaments(request):
 def add_result(request, pk):
     tournament = Tournaments.objects.get(id = pk)
     participants = tournament.participants.all()
+
     enemy_user_list = []
     form = DuelsUserForm()
 
@@ -140,6 +141,8 @@ def add_result(request, pk):
             enemy_user_list.append((participant.id, participant))
     form.fields['user'].choices = enemy_user_list
 
+
+
     if request.method == "POST":
         form = DuelsUserForm(request.POST)
         if form.is_valid():
@@ -147,7 +150,15 @@ def add_result(request, pk):
             hp = form.cleaned_data.get("hp")
             enemy = form.cleaned_data.get("user")
             army = form.cleaned_data.get("army")
-
+            my_army = form.cleaned_data.get("my_army")
+            print(my_army)
+            print(my_army)
+            print(my_army)
+            print(my_army)
+            print(type(my_army))
+            print(type(my_army))
+            print(type(my_army))
+            print(type(my_army))
             new_duel = Duels.objects.create(tournament = tournament, winner = "", hp_gap = 0)
             if my_hp > hp:
                 new_duel.hp_gap = int(my_hp) - int(hp)
