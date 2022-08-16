@@ -1,0 +1,22 @@
+{% extends 'profile/main_your_profile.html' %}
+
+{% block content_your_profile %}
+<div>
+    <br> <br>
+    <table>
+        <tr>
+            <td> </td>
+            {% for army in armies %}
+                <td>{{ army }}</td>
+            {% endfor %}
+        </tr>
+        {% for score_list in list_score_win_ratio %}
+            <tr>
+                {% for score in score_list %}
+                    <td>{{ score }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock content_your_profile %}

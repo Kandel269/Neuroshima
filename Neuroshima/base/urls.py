@@ -19,5 +19,6 @@ urlpatterns = [
     path('twoj-profil/gospodarz-turniejów/', views.host_tournaments, name ='host_tournaments'),
     path('twoj-profil/stworz-turniej/', views.create_tournament, name='create_tournament'),
     path('twoj-profil/historia-pojedynków/', views.history_of_duels, name='history_of_duels'),
+    path('twoj-profil/statystyki/', views.profile_statistics, name='profile_statistics'),
 
 ]
