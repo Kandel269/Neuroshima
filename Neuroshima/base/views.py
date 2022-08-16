@@ -285,9 +285,30 @@ def tournament_statistics(request,pk):
 
     list_score_win_ratio = []
 
-    for army_score in len(range(list_score_2D_armies)):
-        for score in len(range(army_score)):
+    for army_score in range(len(list_score_2D_armies)):
+        lock = 0
+        army_win_ratio = []
+        for score in range(len(list_score_2D_armies[army_score])):
+            if lock == 0:
+                army_win_ratio.append(list_score_2D_armies[army_score][score])
+                lock += 1
+                continue
+
+            if list_score_2D_armies[army_score][score] == 0:
+                army_win_ratio.append("0%")
+            else:
+                if int(list_score_2D_armies[score-1][army_score+1]) == 0:
+                    army_win_ratio.append("100%")
+                else:
+                    army_win_ratio.append(str(round((
+                        int(list_score_2D_armies[army_score][score])
+                        /
+                        ((list_score_2D_armies[army_score][score])+int(list_score_2D_armies[score-1][army_score+1]))
+                    )*100,2))
+                    +"%")
 
 
-    context = {'tournament':tournament,'armies':armies,'list_score_2D_armies':list_score_2D_armies}
+        list_score_win_ratio.append(army_win_ratio)
+
+    context = {'tournament':tournament,'armies':armies,'list_score_win_ratio':list_score_win_ratio}
     return render(request, 'tournament/statistics.html', context)
