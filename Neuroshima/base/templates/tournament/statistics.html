@@ -2,8 +2,21 @@
 
 {% block tournament_content %}
 <div>
-    {% for army in armies %}
-       <p>{{ army }}</p>
-    {% endfor %}
+    <br> <br>
+    <table>
+        <tr>
+            <td> </td>
+            {% for army in armies %}
+                <td>{{ army }}</td>
+            {% endfor %}
+        </tr>
+        {% for score_list in list_score_2D_armies %}
+            <tr>
+                {% for score in score_list %}
+                    <td>{{ score }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
 </div>
 {% endblock tournament_content %}
