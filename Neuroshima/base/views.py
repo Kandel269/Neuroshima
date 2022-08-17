@@ -257,8 +257,16 @@ def tournament_statistics(request,pk):
     return render(request, 'tournament/statistics.html', context)
 
 def profile_statistics(request):
-    players = DuelUser.objects.filter(users = request.user)
-    duels = xd
+    all_duels = Duels.objects.all()
+    duels = []
+    for duel in all_duels:
+        lock = 0
+        for player in duel.users.all():
+            if request.user == player.user:
+                if lock == 0:
+                    duels.append(duel)
+                    lock += 1
+
     armies = Armies.objects.all()
 
     list_score_win_ratio = army_win_ratio(duels, armies)
