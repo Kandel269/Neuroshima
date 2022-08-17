@@ -34,14 +34,15 @@ class Tournaments(models.Model):
 #     draw_count = models.IntegerField()
 #     lose_count = models.IntegerField()
 
+
+class Duels(models.Model):
+    tournament = models.ForeignKey(Tournaments, on_delete= models.SET_NULL, null = True, blank = True)
+    users = models.ManyToManyField(User, through = 'DuelUser', blank = True)
+    winner = models.CharField(max_length = 250, blank = True)
+    hp_gap = models.IntegerField()
+
 class DuelUser(models.Model):
     user = models.ForeignKey(User, on_delete= models.SET_NULL, null = True, blank = True)
     army = models.ForeignKey(Armies, on_delete= models.SET_NULL, null = True)
     hp = models.IntegerField()
-
-class Duels(models.Model):
-    tournament = models.ForeignKey(Tournaments, on_delete= models.SET_NULL, null = True, blank = True)
-    users = models.ManyToManyField(DuelUser, null = True, blank = True)
-    winner = models.CharField(max_length = 250, blank = True)
-    hp_gap = models.IntegerField()
-
+    duels = models.ForeignKey(Duels, on_delete = models.CASCADE)
