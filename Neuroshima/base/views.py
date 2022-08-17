@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 
-from .calculator import army_win_ratio
+from .calculator import army_win_ratio, army_one_man_win_ratio
 from .models import Tournaments, Duels, Armies, DuelUser
 from .forms import TournamentForm, DuelsUserForm
 
@@ -269,7 +269,7 @@ def profile_statistics(request):
 
     armies = Armies.objects.all()
 
-    list_score_win_ratio = army_win_ratio(duels, armies)
+    list_score_win_ratio = army_one_man_win_ratio(duels, armies,str(request.user))
 
     context = {'armies':armies,'list_score_win_ratio':list_score_win_ratio}
     return render(request, 'profile/profile_statistics.html', context)

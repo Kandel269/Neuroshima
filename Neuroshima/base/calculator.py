@@ -1,3 +1,4 @@
+from copy import deepcopy
 
 
 def army_win_ratio(duels,armies):
@@ -60,6 +61,72 @@ def army_win_ratio(duels,armies):
                     +"%")
 
 
+        list_score_win_ratio.append(army_win_ratio)
+
+    return list_score_win_ratio
+
+def army_one_man_win_ratio(duels,armies, actually_user):
+    list_win_2D_armies = []
+    list_lost_2D_armies = []
+
+    armies_list = []
+
+    for army in armies:
+        armies_list.append(str(army))
+        army_score_list = []
+        army_score_list.append(army.name)
+        for _ in range(len(armies)):
+            army_score_list.append(0)
+        list_win_2D_armies.append(army_score_list)
+
+    list_lost_2D_armies = deepcopy(list_win_2D_armies)
+
+    for duel in duels:
+        army_1_index = 0
+        army_2_index = 0
+
+        lock = 0
+        winner = str(duel.winner)
+        for player in duel.users.all():
+            if lock == 0:
+                army_1 = str(player.army)
+                army_1_index = armies_list.index(army_1)
+                lock += 1
+            army_2 = str(player.army)
+            army_2_index = armies_list.index(army_2)
+
+        if winner == actually_user:
+            list_win_2D_armies[army_1_index][army_2_index + 1] += 1
+
+        else:
+            list_lost_2D_armies[army_1_index][army_2_index + 1] += 1
+
+
+
+    list_score_win_ratio = []
+
+    for army_score in range(len(list_win_2D_armies)):
+        lock = 0
+        army_win_ratio = []
+        for score in range(len(list_win_2D_armies[army_score])):
+            if lock == 0:
+                army_win_ratio.append(list_win_2D_armies[army_score][score])
+                lock += 1
+                continue
+            if list_win_2D_armies[army_score][score] == 0:
+                army_win_ratio.append("0%")
+            else:
+                if list_lost_2D_armies[army_score][score] == 0:
+                    army_win_ratio.append("100%")
+                else:
+                    value = (
+                            list_win_2D_armies[army_score][score]
+                            /
+                            (list_win_2D_armies[army_score][score] + list_lost_2D_armies[army_score][score])
+                              )
+
+                    value_str = str(value*100)+"%"
+                    army_win_ratio.append(value_str)
         list_score_win_ratio.append(army_win_ratio)
 
     return list_score_win_ratio
