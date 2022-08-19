@@ -2,7 +2,14 @@
 
 {% block content %}
 
-
+<div>
+    <h3>Wyszukiwarka</h3>
+    <form method="POST" action="{% url 'search' %}">
+        {% csrf_token %}
+        <input type="text" name="home_search" placeholder="Wyszukaj turniej" />
+        <button type="submit">Wyszukaj</button>
+    </form>
+</div>
 
 {% for tournament in tournaments %}
     <div>

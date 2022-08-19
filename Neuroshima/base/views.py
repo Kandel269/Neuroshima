@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
+from django.views.generic import ListView
 
 from .calculator import army_win_ratio, army_one_man_win_ratio
 from .models import Tournaments, Duels, Armies, DuelUser
@@ -273,3 +274,27 @@ def profile_statistics(request):
 
     context = {'armies':armies,'list_score_win_ratio':list_score_win_ratio}
     return render(request, 'profile/profile_statistics.html', context)
+
+# class TournamentSearchView(ListView):
+#     model = Tournaments
+#     template_name = 'base/search.html'
+#     context = 'tournaments'
+#
+#     def get_queryset(self):
+#         query = self.request.GET.get("home_search")
+#         if query:
+#             return Tournaments.objects.filter(name__icontains = query)
+#         else:
+#             return Tournaments.objects.all()
+
+def TournamentSearchView(request):
+    query = request.POST['home_search']
+    if query:
+        tournaments = Tournaments.objects.filter(name__icontains = query)
+    else:
+        tournaments = Tournaments.objects.all()
+
+    query_len = len(tournaments)
+
+    context = {'query':query,'tournaments':tournaments,'query_len':query_len}
+    return render(request, 'base/search.html', context)
