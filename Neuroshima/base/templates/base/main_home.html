@@ -5,19 +5,25 @@
     <style>
     .home-container{
         display: grid;
-        grid-template-columns: 1fr 4fr;
+        grid-template-columns: 2fr 8fr 1fr;
     }
     </style>
 
 <div class = "home-container">
     <div>
-        <br> xx
+        <h4><a href = "{% url 'home' %}">Nowości</a></h4><br>
+        <h4><a href="{% url 'tournaments_list' %}">Lista turniejów</a></h4>
+        <h4><a href="">Lista użytkowników</a></h4>
     </div>
 
     {% block home_content %}
 
 
     {% endblock home_content %}
+
+    <div>
+        xdd
+    </div>
 
 </div>
 

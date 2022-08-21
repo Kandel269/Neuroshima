@@ -45,3 +45,9 @@ class Duels(models.Model):
     users = models.ManyToManyField(DuelUser, blank = True)
     winner = models.CharField(max_length = 250, blank = True)
     hp_gap = models.IntegerField()
+
+class News(models.Model):
+    title = models.CharField(max_length = 255)
+    description = models.TextField()
+    data_create =  models.DateTimeField(auto_now_add = True)
+    data_updated = models.DateTimeField(auto_now=True)

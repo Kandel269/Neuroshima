@@ -3,33 +3,11 @@
 {% block home_content %}
 
 <div>
-    <div>
-        <h3>Wyszukiwarka</h3>
-        <form method="POST" action="{% url 'search' %}">
-            {% csrf_token %}
-            <input type="text" name="home_search" placeholder="Wyszukaj turniej" />
-            <select name="home_select">
-                <optgroup label="Szukaj turnieju">
-                    <option value="tournament_name">Nazwa</option>
-                    <option value="tournament_host">Założyciel</option>
-                </optgroup>
-                <optgroup label="Szukaj turnieju zakończonego">
-                    <option value="finished_tournament_name">Nazwa</option>
-                    <option value="finished_tournament_host">Założyciel</option>
-                </optgroup>
-            </select>
-            <button type="submit">Wyszukaj</button>
-        </form>
-    </div>
-
-    {% for tournament in tournaments %}
-        <div>
-            <h3><strong><a href = "{% url 'tournament' tournament.id %}"> {{ tournament.name }} </a></strong></h3>
-            <br>
-            {{ tournament.description }}
-        </div>
-        <hr>
-
+    {% for message in news %}
+    <h6>Data ostatniej modyfikacji: {{ message.data_updated }}</h6>
+    <h2>{{ message.title }}</h2>
+    <p>{{ message.description }}</p>
+    <hr>
     {% endfor %}
 </div>
 {% endblock home_content %}

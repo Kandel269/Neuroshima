@@ -8,7 +8,7 @@ from django.contrib import messages
 from django.views.generic import ListView
 
 from .calculator import army_win_ratio, army_one_man_win_ratio
-from .models import Tournaments, Duels, Armies, DuelUser
+from .models import Tournaments, Duels, Armies, DuelUser, News
 from .forms import TournamentForm, DuelsUserForm
 
 
@@ -64,9 +64,14 @@ def logoutUser(request):
     return redirect('home')
 
 def home(request):
+    news = News.objects.all().order_by('-data_create')
+    context = {'news': news}
+    return render(request, 'base/home.html', context)
+
+def tournaments_list(request):
     tournaments = Tournaments.objects.all()
     context = {'tournaments': tournaments}
-    return render(request, 'base/home.html', context)
+    return render(request, 'base/tournaments_list.html', context)
 
 def tournament(request, pk):
     tournament = Tournaments.objects.get(id=pk)
@@ -333,3 +338,4 @@ def tournament_settings(request, pk):
 
     context = {'tournament':tournament}
     return render(request, "tournament/tournament_settings.html", context)
+
