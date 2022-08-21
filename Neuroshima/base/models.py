@@ -42,6 +42,6 @@ class DuelUser(models.Model):
 
 class Duels(models.Model):
     tournament = models.ForeignKey(Tournaments, on_delete= models.SET_NULL, null = True, blank = True)
-    users = models.ManyToManyField(DuelUser, null = True, blank = True)
+    users = models.ManyToManyField(DuelUser, blank = True)
     winner = models.CharField(max_length = 250, blank = True)
     hp_gap = models.IntegerField()
