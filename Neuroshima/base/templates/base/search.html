@@ -1,6 +1,18 @@
 {% extends 'main.html' %}
 
 {% block content %}
+
+<style>
+    .home-container{
+        display: grid;
+        grid-template-columns: 1fr 4fr;
+    }
+</style>
+
+<div>
+
+</div>
+
 <div>
     <h3>Wyszukiwarka</h3>
     <form method="POST" action="{% url 'search' %}">
