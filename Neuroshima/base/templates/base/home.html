@@ -7,6 +7,16 @@
     <form method="POST" action="{% url 'search' %}">
         {% csrf_token %}
         <input type="text" name="home_search" placeholder="Wyszukaj turniej" />
+        <select name="home_select">
+            <optgroup label="Szukaj turnieju">
+                <option value="tournament_name">Nazwa</option>
+                <option value="tournament_host">Założyciel</option>
+            </optgroup>
+            <optgroup label="Szukaj turnieju zakończonego">
+                <option value="finished_tournament_name">Nazwa</option>
+                <option value="finished_tournament_host">Założyciel</option>
+            </optgroup>
+        </select>
         <button type="submit">Wyszukaj</button>
     </form>
 </div>

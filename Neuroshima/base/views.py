@@ -289,9 +289,20 @@ def profile_statistics(request):
 
 def TournamentSearchView(request):
     query = request.POST['home_search']
-    if query:
-        tournaments = Tournaments.objects.filter(name__icontains = query)
+    category = request.POST['home_select']
+
+    if category[0:3] == "tou":
+        if category == "tournament_name":
+            tournaments = Tournaments.objects.filter(name__icontains=query)
+        else:
+            try:
+                get_user = User.objects.get(username = query)
+                user_id = get_user.id
+                tournaments = Tournaments.objects.filter(host = user_id)
+            except:
+                tournaments = ""
     else:
+    #     jeszce nie opracowane
         tournaments = Tournaments.objects.all()
 
     query_len = len(tournaments)
