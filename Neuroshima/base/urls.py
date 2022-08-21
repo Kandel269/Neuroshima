@@ -14,6 +14,8 @@ urlpatterns = [
     path('turniej/<str:pk>/dodaj-wynik/', views.add_result ,name = 'duel'),
     path('turniej/<str:pk>/historia-pojedynków/', views.tournaments_duels ,name = 'history_of_duels'),
     path('turniej/<str:pk>/statystyki/', views.tournament_statistics ,name = 'tournament_statistics'),
+    path('turniej/<str:pk>/usuń-turniej/', views.delete_tournament ,name = 'delete_tournament'),
+    path('turniej/<str:pk>/ustawienia-turnieju/', views.tournament_settings ,name = 'tournament_settings'),
 
     path('twoj-profil/', views.your_profile, name = 'your_profile'),
     path('twoj-profil/twoje-turnieje/', views.your_tournaments, name ='your_tournaments'),

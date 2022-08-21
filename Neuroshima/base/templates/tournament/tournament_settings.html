@@ -1,0 +1,8 @@
+{% extends 'tournament/main_tournament.html' %}
+
+{% block tournament_content %}
+<div>
+    <p><a href = "{% url 'delete_tournament' tournament.id %}">Usuń turniej</a></p>
+</div>
+
+{% endblock tournament_content %}

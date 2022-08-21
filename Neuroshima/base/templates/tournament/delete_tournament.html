@@ -1,0 +1,12 @@
+{% extends 'tournament/main_tournament.html' %}
+
+{% block tournament_content %}
+
+<form method = "POST" action="">
+    {% csrf_token %}
+    <p>Czy na pewno chcesz usunac turniej "{{ tournament }}"</p>
+    <a href = "{{ request.META.HTTP_REFERER }}"> Powrót </a>
+    <input type="submit" value="Confirm"/>
+</form>
+
+{% endblock tournament_content %}

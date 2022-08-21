@@ -309,3 +309,27 @@ def TournamentSearchView(request):
 
     context = {'query':query,'tournaments':tournaments,'query_len':query_len}
     return render(request, 'base/search.html', context)
+
+@login_required(login_url='login')
+def delete_tournament(request, pk):
+    tournament = Tournaments.objects.get(id = pk)
+
+    if request.user != tournament.host:
+        return HttpResponse('Nie masz zgody od rodziców na przebywanie w tym miejscu')
+
+    if request.method == "POST":
+        tournament.delete()
+        return redirect('home')
+
+    context = {'tournament':tournament}
+    return render(request, 'tournament/delete_tournament.html',context)
+
+@login_required(login_url='login')
+def tournament_settings(request, pk):
+    tournament = Tournaments.objects.get(id = pk)
+
+    if request.user != tournament.host:
+        return HttpResponse('Nie masz zgody od rodziców na przebywanie w tym miejscu')
+
+    context = {'tournament':tournament}
+    return render(request, "tournament/tournament_settings.html", context)
