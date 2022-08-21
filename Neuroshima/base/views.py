@@ -68,6 +68,11 @@ def home(request):
     context = {'news': news}
     return render(request, 'base/home.html', context)
 
+def user_list(request):
+    users = User.objects.all()
+    context = {'users': users}
+    return render(request, 'base/user_list.html', context)
+
 def tournaments_list(request):
     tournaments = Tournaments.objects.all()
     context = {'tournaments': tournaments}

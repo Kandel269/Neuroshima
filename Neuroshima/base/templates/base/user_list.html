@@ -1,10 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base/main_home.html' %}
 
-</body>
-</html>
+{% block home_content %}
+<div>
+    {% for user in users %}
+        <h4><strong>{{ user.username }}</strong></h4>
+        <hr>
+    {% endfor %}
+</div>
+{% endblock home_content %}
