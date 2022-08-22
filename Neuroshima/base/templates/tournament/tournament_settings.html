@@ -2,6 +2,8 @@
 
 {% block tournament_content %}
 <div>
+    <p><a href="{% url 'tournament_edit' tournament.id %}">Edytuj turniej</a></p>
+    <br>
     <p><a href = "{% url 'delete_tournament' tournament.id %}">Usuń turniej</a></p>
 </div>
 

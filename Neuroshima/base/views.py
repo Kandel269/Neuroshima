@@ -11,7 +11,6 @@ from .calculator import army_win_ratio, army_one_man_win_ratio
 from .models import Tournaments, Duels, Armies, DuelUser, News
 from .forms import TournamentForm, DuelsUserForm
 
-
 # Create your views here.
 
 def loginPage(request):
@@ -127,23 +126,6 @@ def create_tournament(request):
 
     context = {'form':form}
     return render(request, 'tournament/tournament_form.html', context)
-
-@login_required(login_url='login')
-def update_tournmanet(request, pk):
-    tournament =Tournaments.objects.get(id = pk)
-    form = TournamentForm(instance = tournament)
-
-    if request.user !=tournament.host:
-        return HttpResponse('Mama ci nie pozwoliła!')
-
-    if request.metod == "POST":
-        form = TournamentForm(request.POST, instance = tournament)
-        if form.is_valid():
-            form.save()
-            return redirect('home')
-
-    context = {'form': form}
-    return render(request, 'cosik', context)
 
 def rules(request, pk):
     tournament = Tournaments.objects.get(id=pk)
@@ -285,17 +267,6 @@ def profile_statistics(request):
     context = {'armies':armies,'list_score_win_ratio':list_score_win_ratio}
     return render(request, 'profile/profile_statistics.html', context)
 
-# class TournamentSearchView(ListView):
-#     model = Tournaments
-#     template_name = 'base/search.html'
-#     context = 'tournaments'
-#
-#     def get_queryset(self):
-#         query = self.request.GET.get("home_search")
-#         if query:
-#             return Tournaments.objects.filter(name__icontains = query)
-#         else:
-#             return Tournaments.objects.all()
 
 def TournamentSearchView(request):
     query = request.POST['home_search']
@@ -343,4 +314,22 @@ def tournament_settings(request, pk):
 
     context = {'tournament':tournament}
     return render(request, "tournament/tournament_settings.html", context)
+
+@login_required(login_url='login')
+def update_tournmanet(request, pk):
+    tournament =Tournaments.objects.get(id = pk)
+    form = TournamentForm(instance = tournament)
+
+    if request.user != tournament.host:
+        return HttpResponse('Mama ci nie pozwoliła!')
+
+    if request.method == "POST":
+        form = TournamentForm(request.POST, instance = tournament)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+
+    context = {'form': form,'tournament':tournament}
+    return render(request, 'tournament/tournament_edit.html', context)
+
 

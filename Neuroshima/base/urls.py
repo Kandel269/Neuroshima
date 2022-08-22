@@ -18,6 +18,7 @@ urlpatterns = [
     path('turniej/<str:pk>/statystyki/', views.tournament_statistics ,name = 'tournament_statistics'),
     path('turniej/<str:pk>/usuń-turniej/', views.delete_tournament ,name = 'delete_tournament'),
     path('turniej/<str:pk>/ustawienia-turnieju/', views.tournament_settings ,name = 'tournament_settings'),
+    path('turniej/<str:pk>/ustawienia-turnieju/edytu-turniej', views.update_tournmanet ,name = 'tournament_edit'),
 
     path('twoj-profil/', views.your_profile, name = 'your_profile'),
     path('twoj-profil/twoje-turnieje/', views.your_tournaments, name ='your_tournaments'),
