@@ -51,3 +51,7 @@ class News(models.Model):
     description = models.TextField()
     data_create =  models.DateTimeField(auto_now_add = True)
     data_updated = models.DateTimeField(auto_now=True)
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, null = True, on_delete=models.CASCADE)
+    image = models.ImageField(null = True)
