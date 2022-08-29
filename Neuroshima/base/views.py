@@ -272,6 +272,13 @@ def profile_statistics(request):
     return render(request, 'profile/profile_statistics.html', context)
 
 def profile_settings(request):
+    current_user = request.user
+    current_profile = current_user.profile
+    if request.method == "POST":
+        image = request.FILES["file-upload"]
+        current_profile.image = image
+        current_profile.save()
+        return redirect('home')
     context = {}
     return render(request, 'profile/profile_settings.html',context)
 

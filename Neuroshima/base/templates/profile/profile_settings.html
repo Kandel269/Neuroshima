@@ -3,6 +3,8 @@
 
 {% block content_your_profile %}
 <form method = "POST" enctype="multipart/form-data" >
-    <input type="file" name="'file-upload-name"/>
+    {% csrf_token %}
+    <input type="file" name="file-upload"/>
+    <button type="submit">Aktuakizuj zdjęcie</button>
 </form>
 {% endblock content_your_profile %}
