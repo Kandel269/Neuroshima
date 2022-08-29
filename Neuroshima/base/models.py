@@ -54,4 +54,4 @@ class News(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, null = True, on_delete=models.CASCADE)
-    image = models.ImageField(null = True, blank = True)
+    image = models.ImageField(upload_to= "profile_images/",null = True, blank = True)

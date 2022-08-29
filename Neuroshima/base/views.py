@@ -138,7 +138,10 @@ def rules(request, pk):
 @login_required(login_url='login')
 def your_profile(request):
     actuall_user = request.user
-    context = {'actuall_user':actuall_user}
+    instance = actuall_user.profile
+
+
+    context = {'actuall_user':actuall_user,'instance':instance}
     return render(request, 'profile/your_profile.html', context)
 
 @login_required(login_url='login')
@@ -201,7 +204,6 @@ def add_result(request, pk):
 
 @login_required(login_url='login')
 def history_of_duels(request):
-    tournament = Tournaments.objects.all()
     duels = Duels.objects.all()
 
     duels_player_list = []
@@ -216,7 +218,7 @@ def history_of_duels(request):
         if lock == 1:
             duels_player_list.append(players)
 
-    context = {'duels_player_list': duels_player_list, 'tournament': tournament}
+    context = {'duels_player_list': duels_player_list}
     return render(request, 'profile/history_of_duels.html',context)
 
 def tournaments_duels(request, pk):
