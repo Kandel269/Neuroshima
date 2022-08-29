@@ -5,10 +5,10 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
-from django.views.generic import ListView
+
 
 from .calculator import army_win_ratio, army_one_man_win_ratio
-from .models import Tournaments, Duels, Armies, DuelUser, News
+from .models import Tournaments, Duels, Armies, DuelUser, News, Profile
 from .forms import TournamentForm, DuelsUserForm
 
 # Create your views here.
@@ -49,6 +49,8 @@ def registerPage(request):
             user = form.save(commit = False)
             user.username = user.username.lower()
             user.save()
+            new_profile = Profile(user = user)
+            new_profile.save()
             login(request,user)
             return redirect('home')
         else:
@@ -267,6 +269,9 @@ def profile_statistics(request):
     context = {'armies':armies,'list_score_win_ratio':list_score_win_ratio}
     return render(request, 'profile/profile_statistics.html', context)
 
+def profile_settings(request):
+    context = {}
+    return render(request, 'profile/profile_settings.html',context)
 
 def TournamentSearchView(request):
     query = request.POST['home_search']
@@ -331,5 +336,7 @@ def update_tournmanet(request, pk):
 
     context = {'form': form,'tournament':tournament}
     return render(request, 'tournament/tournament_edit.html', context)
+
+
 
 
