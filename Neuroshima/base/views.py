@@ -49,7 +49,7 @@ def registerPage(request):
             user = form.save(commit = False)
             user.username = user.username.lower()
             user.save()
-            new_profile = Profile(user = user)
+            new_profile = Profile(user = user, image = "profile_images/brak_foto.jpg")
             new_profile.save()
             login(request,user)
             return redirect('home')
