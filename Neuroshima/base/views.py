@@ -1,3 +1,5 @@
+import os
+
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
@@ -5,14 +7,17 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
+from django.conf import settings
 
-
+from PIL import Image
 
 from .calculator import army_win_ratio, army_one_man_win_ratio
 from .models import Tournaments, Duels, Armies, DuelUser, News, Profile
 from .forms import TournamentForm, DuelsUserForm, ProfileForm
 
 # Create your views here.
+
+
 
 def loginPage(request):
     page = "login"
@@ -280,7 +285,12 @@ def profile_settings(request):
         form = ProfileForm(request.POST, request.FILES, instance = current_profile)
         if form.is_valid():
             form.save()
+            image = Image.open(current_profile.image)
+            image.thumbnail((150,150))
+            # save_path = os.path.join(settings.BASE_DIR, current_profile.image.url)            #nie dziala mi to nwm dlaczego. moze dlatego ze przy jednym "\" jest w lewo a w drugim "/" w prawo... ?
+            save_path = f"{settings.BASE_DIR}{current_profile.image.url}"
 
+            image.save(save_path)
             return redirect('home')
     context = {'form':form}
     return render(request, 'profile/profile_settings.html',context)
