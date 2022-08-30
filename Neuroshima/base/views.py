@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
+import mimetypes
 
 
 from .calculator import army_win_ratio, army_one_man_win_ratio
@@ -139,7 +140,6 @@ def rules(request, pk):
 def your_profile(request):
     actuall_user = request.user
     instance = actuall_user.profile
-
 
     context = {'actuall_user':actuall_user,'instance':instance}
     return render(request, 'profile/your_profile.html', context)
@@ -276,6 +276,11 @@ def profile_settings(request):
     current_profile = current_user.profile
     if request.method == "POST":
         image = request.FILES["file-upload"]
+        mimetype, encoding = mimetypes.guess_type(image.name)
+        if mimetype != image.content_type:
+            raise TypeError("Mimetype nie pasuje do rozszerzenia pliku")
+        if "image" not in mimetype:
+            raise TypeError("Wysyłasz plik o złym rozszerzeniu")
         current_profile.image = image
         current_profile.save()
         return redirect('home')
