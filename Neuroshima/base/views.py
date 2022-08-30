@@ -10,7 +10,7 @@ import mimetypes
 
 from .calculator import army_win_ratio, army_one_man_win_ratio
 from .models import Tournaments, Duels, Armies, DuelUser, News, Profile
-from .forms import TournamentForm, DuelsUserForm
+from .forms import TournamentForm, DuelsUserForm, ProfileForm
 
 # Create your views here.
 
@@ -271,21 +271,33 @@ def profile_statistics(request):
     context = {'armies':armies,'list_score_win_ratio':list_score_win_ratio}
     return render(request, 'profile/profile_statistics.html', context)
 
+@login_required(login_url='login')
 def profile_settings(request):
     current_user = request.user
     current_profile = current_user.profile
+    form = ProfileForm(instance = current_profile)
     if request.method == "POST":
-        image = request.FILES["file-upload"]
-        mimetype, encoding = mimetypes.guess_type(image.name)
-        if mimetype != image.content_type:
-            raise TypeError("Mimetype nie pasuje do rozszerzenia pliku")
-        if "image" not in mimetype:
-            raise TypeError("Wysyłasz plik o złym rozszerzeniu")
-        current_profile.image = image
-        current_profile.save()
-        return redirect('home')
-    context = {}
+        form = ProfileForm(request.POST, request.FILES, instance = current_profile)
+        if form.is_valid():
+            form.save()
+
+            return redirect('home')
+    context = {'form':form}
     return render(request, 'profile/profile_settings.html',context)
+
+
+
+def create_tournament(request):
+    if request.method == "POST":
+        form = TournamentForm(request.POST)
+        if form.is_valid():
+            add_host = form.save(commit = False)
+            add_host.host = request.user
+            add_host.save()
+            return redirect('home')
+
+    context = {'form':form}
+    return render(request, 'tournament/tournament_form.html', context)
 
 def TournamentSearchView(request):
     query = request.POST['home_search']

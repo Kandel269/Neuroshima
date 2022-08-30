@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 
-from .models import Tournaments, DuelUser, Armies
+from .models import Tournaments, DuelUser, Armies, Profile
 from django.forms import ModelForm
 from django import forms
 
@@ -29,6 +29,12 @@ class DuelsUserForm(forms.ModelForm):
     class Meta:
         model = DuelUser
         fields = ['user','army','hp']
+
+class ProfileForm(forms.ModelForm):
+
+    class Meta:
+        model = Profile
+        fields = ['image']
 
 # class ParticipantTournamentForm(forms.Form):
 #     new_participant = forms.ChoiceField(choices = user_list())
