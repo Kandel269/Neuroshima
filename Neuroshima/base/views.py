@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
-import mimetypes
+
 
 
 from .calculator import army_win_ratio, army_one_man_win_ratio
@@ -286,7 +286,7 @@ def profile_settings(request):
     return render(request, 'profile/profile_settings.html',context)
 
 
-
+@login_required(login_url='login')
 def create_tournament(request):
     if request.method == "POST":
         form = TournamentForm(request.POST)
