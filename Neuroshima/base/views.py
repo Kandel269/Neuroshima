@@ -298,6 +298,7 @@ def profile_settings(request):
 
 @login_required(login_url='login')
 def create_tournament(request):
+    form = TournamentForm()
     if request.method == "POST":
         form = TournamentForm(request.POST)
         if form.is_valid():
