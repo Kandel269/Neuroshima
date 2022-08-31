@@ -1,50 +1,40 @@
-{% extends 'main.html' %}
+{% extends 'base/main_home.html' %}
 
-{% block content %}
-
-<style>
-    .home-container{
-        display: grid;
-        grid-template-columns: 1fr 4fr;
-    }
-</style>
-
+{% block home_content %}
 <div>
+    <div>
+        <h3>Wyszukiwarka</h3>
+        <form method="POST" action="{% url 'search' %}">
+            {% csrf_token %}
+            <input type="text" name="home_search" placeholder="Wyszukaj turniej" />
+            <select name="home_select">
+                <optgroup label="Szukaj turnieju">
+                    <option value="tournament_name">Nazwa</option>
+                    <option value="tournament_host">Założyciel</option>
+                </optgroup>
+                <optgroup label="Szukaj turnieju zakończonego">
+                    <option value="finished_tournament_name">Nazwa</option>
+                    <option value="finished_tournament_host">Założyciel</option>
+                </optgroup>
+            </select>
+            <button type="submit">Wyszukaj</button>
+        </form>
+    </div>
 
+    <div>
+        <h2><strong>Liczba wyszukanych obiektów: {{ query_len }}
+            {% if query %}
+            dla hasła {{ query }}
+            {% endif %}
+        </strong></h2>
+        {% for tournament in tournaments %}
+            <div>
+                <h3><strong><a href = "{% url 'tournament' tournament.id %}"> {{ tournament.name }} </a></strong></h3>
+            <br>
+                {{ tournament.description }}
+            </div>
+            <hr>
+        {% endfor %}
+    </div>
 </div>
-
-<div>
-    <h3>Wyszukiwarka</h3>
-    <form method="POST" action="{% url 'search' %}">
-        {% csrf_token %}
-        <input type="text" name="home_search" placeholder="Wyszukaj turniej" />
-        <select name="home_select">
-            <optgroup label="Szukaj turnieju">
-                <option value="tournament_name">Nazwa</option>
-                <option value="tournament_host">Założyciel</option>
-            </optgroup>
-            <optgroup label="Szukaj turnieju zakończonego">
-                <option value="finished_tournament_name">Nazwa</option>
-                <option value="finished_tournament_host">Założyciel</option>
-            </optgroup>
-        </select>
-        <button type="submit">Wyszukaj</button>
-    </form>
-</div>
-
-<div>
-    <h2><strong>Liczba wyszukanych obiektów: {{ query_len }}
-        {% if query %}
-        dla hasła {{ query }}
-        {% endif %}
-    </strong></h2>
-    {% for tournament in tournaments %}
-        <div>
-            <h3><strong><a href = "{% url 'tournament' tournament.id %}"> {{ tournament.name }} </a></strong></h3>
-        <br>
-            {{ tournament.description }}
-        </div>
-        <hr>
-    {% endfor %}
-</div>
-{% endblock content %}
+{% endblock home_content %}
