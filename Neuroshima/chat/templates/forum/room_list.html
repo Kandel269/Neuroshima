@@ -1,0 +1,13 @@
+{% extends 'base/main_home.html' %}
+
+{% block home_content %}
+<div>
+    <br><br>
+    {% for room in room_list %}
+        <h3>{{ room }}</h3>
+        <p>Opis tematu dyskusji:</p>
+        <p>{{ room.description }}</p>
+        <h4>Temat: {{ room.topic }}</h4>
+    {% endfor %}
+</div>
+{% endblock home_content %}

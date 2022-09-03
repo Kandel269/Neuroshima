@@ -23,6 +23,7 @@
         <h4>Poprzednie edycje</h4>
         <h4><a href = "{% url 'duel' tournament.id %}">Dodaj wynik</a></h4>
         <br> <br>
+
         {% if request.user == tournament.host %}
             <h4><a href ="{% url 'tournament_settings' tournament.id %}">Ustawienia</a></h4>
             <h4><a href ="">Dodaj zawodnika/dodaj wynik</a></h4>
