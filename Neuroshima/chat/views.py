@@ -1,7 +1,7 @@
 
 from django.shortcuts import get_object_or_404, render, redirect
 from django.views import View
-from django.views.generic import TemplateView, DeleteView, CreateView
+from django.views.generic import TemplateView, DeleteView, CreateView, UpdateView
 from django.urls import reverse
 
 from .forms import MessagesForm
@@ -51,6 +51,21 @@ class RoomCreateView(CreateView):
     model = Room
     fields = ['name','topic','description']
     template_name = 'forum/room_create.html'
+
+    def get_success_url(self):
+        return reverse('chat:room_list_view')
+
+class RoomDeleteView(DeleteView):
+    model = Room
+    template_name ='forum/room_delete.html'
+
+    def get_success_url(self):
+        return reverse('chat:room_list_view')
+
+class RoomUpdateView(UpdateView):
+    model = Room
+    fields = ['name','topic','description']
+    template_name =  'forum/room_update.html'
 
     def get_success_url(self):
         return reverse('chat:room_list_view')

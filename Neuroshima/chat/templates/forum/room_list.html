@@ -6,7 +6,9 @@
     {% for room in room_list %}
         <h3><a href="{% url 'chat:room_view' room.id %}">{{ room }}</a></h3>
         <p>{{ room.description|truncatewords:20 }}</p>
-        <h5>{{ room.topic }}</h5>
+        {% if room.topic %}
+            <h5>{{ room.topic }}</h5>
+        {% endif %}
         <h6>{{ room.data_updated }}</h6>
         <hr>
     {% endfor %}

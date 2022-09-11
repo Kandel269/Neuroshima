@@ -5,6 +5,9 @@
 <div>
     <div>
         <h2>{{ room.name }}</h2>
+        {% if request.user == room.host %}
+            <p><a href ="{% url 'chat:room_delete' room.id %}">Usuń pokój</a><a href = "{% url 'chat:room_update' room.id %}">Edytuj pokój</a></p>
+        {% endif %}
         <p>{{ room.description }}</p>
         <hr>
     </div>
