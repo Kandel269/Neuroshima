@@ -1,0 +1,15 @@
+{% extends 'base/main_home.html' %}
+
+
+{% block home_content %}
+<div>
+    <h2>{{ room.name }}</h2>
+    <p>{{ room.description }}</p>
+    <hr>
+    {% for message in messages %}
+        <h5>@{{message.user}}</h5>
+        <p>{{message.body}}</p>
+        <h6>{{message.data_updated}}</h6>
+    {% endfor %}
+</div>
+{% endblock home_content %}
