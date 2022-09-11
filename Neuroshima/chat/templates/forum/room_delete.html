@@ -4,7 +4,8 @@
 
 <form method = "POST" action="">
     {% csrf_token %}
-    <p>Czy na pewno chcesz usunac pokój?"{{ model }}"</p>
+    <p>Czy na pewno chcesz usunac pokój? <strong>"{{ object }}"</strong></p>
+    {{ form }}
     <a href = "{{ request.META.HTTP_REFERER }}"> Powrót </a>
     <input type="submit" value="Confirm"/>
 </form>

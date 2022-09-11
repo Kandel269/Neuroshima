@@ -1,10 +1,10 @@
-
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render, redirect
 from django.views import View
 from django.views.generic import TemplateView, DeleteView, CreateView, UpdateView
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 
-from .forms import MessagesForm
+from .forms import MessagesForm, RoomForm
 from .models import Room, Messages
 
 
@@ -40,20 +40,40 @@ class RoomView(View):
 
         return render(request,self.template_name, {})
 
-class MessageDeleteView(DeleteView):
+class MessagesDeleteView(DeleteView):
     template_name = 'forum/delete_message.html'
     model = Messages
 
     def get_success_url(self):
         return reverse('chat:room_list_view')
 
+class MessagesUpdateView(UpdateView):
+    model = Messages
+    fields = ['body']
+    template_name = 'forum/message_update.html'
+
+    def get_success_url(self):
+        return reverse('chat:room_list_view')
+
 class RoomCreateView(CreateView):
-    model = Room
-    fields = ['name','topic','description']
+    form_class = RoomForm
     template_name = 'forum/room_create.html'
 
     def get_success_url(self):
         return reverse('chat:room_list_view')
+
+    def get(self, request, *args, **kwargs):
+        context = {'form': RoomForm()}
+        return render(request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        form = RoomForm(request.POST)
+        if form.is_valid():
+            room = form.save(commit = False)
+            room.host = request.user
+            room.save()
+            return HttpResponseRedirect(reverse_lazy('chat:room_view', args=[room.id]))
+        return render(request, self.template_name, {'form': form})
 
 class RoomDeleteView(DeleteView):
     model = Room
