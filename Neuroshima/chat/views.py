@@ -1,8 +1,10 @@
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render, redirect
 from django.views import View
 from django.views.generic import TemplateView, DeleteView, CreateView, UpdateView
 from django.urls import reverse, reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .forms import MessagesForm, RoomForm
 from .models import Room, Messages
@@ -55,7 +57,8 @@ class MessagesUpdateView(UpdateView):
     def get_success_url(self):
         return reverse('chat:room_list_view')
 
-class RoomCreateView(CreateView):
+class RoomCreateView(LoginRequiredMixin,CreateView):
+    redirect_field_name = 'login'
     form_class = RoomForm
     template_name = 'forum/room_create.html'
 

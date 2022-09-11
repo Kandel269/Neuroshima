@@ -7,7 +7,7 @@ urlpatterns = [
     path('szukaj/', views.TournamentSearchView, name = 'search' ),
     path('lista-użytkowników', views.user_list, name='user_list'),
 
-    path('logowanie/', views.loginPage, name = 'login'),
+    path(r'^logowanie/$', views.loginPage, name = 'login'),
     path('rejestracja/', views.registerPage, name = 'register'),
     path('wylogowanie/', views.logoutUser, name = 'logout'),
 
