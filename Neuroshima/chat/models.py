@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
-from base.models import Tournaments
+from base.models import Tournaments         ## ??
 # Create your models here.
 
 class Topic(models.Model):
@@ -29,5 +29,8 @@ class Messages(models.Model):
     data_create =  models.DateTimeField(auto_now_add = True)
     data_updated = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        ordering = ['-data_updated', '-data_create']
+
     def __str__(self):
-        return self.body[0:50]
+        return self.body[0:20]

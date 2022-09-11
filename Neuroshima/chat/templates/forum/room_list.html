@@ -4,11 +4,11 @@
 <div>
     <br><br>
     {% for room in room_list %}
-        <h3><a href="{% url 'room_detail_view' room.id %}">{{ room }}</a></h3>
-        <p>Opis tematu dyskusji:</p>
+        <h3><a href="{% url 'chat:room_view' room.id %}">{{ room }}</a></h3>
         <p>{{ room.description|truncatewords:20 }}</p>
-        <h4>Temat: {{ room.topic }}</h4>
+        <h5>{{ room.topic }}</h5>
+        <h6>{{ room.data_updated }}</h6>
+        <hr>
     {% endfor %}
-    <hr>
 </div>
 {% endblock home_content %}

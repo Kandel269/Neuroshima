@@ -1,0 +1,13 @@
+{% extends 'base/main_home.html' %}
+
+
+{% block home_content %}
+
+<form method = "POST" action="">
+    {% csrf_token %}
+    <p>Czy na pewno chcesz usunac wiadomosc "{{ message|truncatewords:20 }}"</p>
+    <a href = "{{ request.META.HTTP_REFERER }}"> Powrót </a>
+    <input type="submit" value="Confirm"/>
+</form>
+
+{% endblock home_content %}

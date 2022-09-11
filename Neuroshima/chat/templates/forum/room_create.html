@@ -1,0 +1,15 @@
+{% extends 'profile/main_your_profile.html' %}
+
+{% block content_your_profile %}
+
+<div>
+    <form method="POST" action="">
+        {% csrf_token %}
+        <p>Nazwa turnieju: {{form.name}}</p>
+        <p>Opis turnieju: {{form.description}}</p>
+        <p>Zasady turnieju: {{form.rules}}</p>
+        <input type="submit" value="Submit" />
+    </form>
+</div>
+
+{% endblock content_your_profile %}

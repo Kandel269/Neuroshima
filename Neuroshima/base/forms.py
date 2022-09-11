@@ -36,5 +36,7 @@ class ProfileForm(forms.ModelForm):
         model = Profile
         fields = ['image']
 
+
+
 # class ParticipantTournamentForm(forms.Form):
 #     new_participant = forms.ChoiceField(choices = user_list())

@@ -1,8 +1,10 @@
 
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.views import View
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, DeleteView, CreateView
+from django.urls import reverse
 
+from .forms import MessagesForm
 from .models import Room, Messages
 
 
@@ -14,6 +16,7 @@ class RoomListView(TemplateView):
         return context
 
 class RoomView(View):
+    form_class = MessagesForm
     template_name = 'forum/room.html'
 
     def get(self,request,id=None,*args,**kwargs):
@@ -23,3 +26,31 @@ class RoomView(View):
             context['room'] = room
             context['messages'] = Messages.objects.filter(room=id)
         return render(request,self.template_name,context)
+
+    def post(self,request,id=None,*args,**kwargs):
+        form = self.form_class(request.POST)
+        if id is not None:
+            room = get_object_or_404(Room, id=id)
+            if form.is_valid():
+                message = form.save(commit = False)
+                message.room = room
+                message.user = request.user
+                message.save()
+            return redirect('chat:room_view', id=room.id)
+
+        return render(request,self.template_name, {})
+
+class MessageDeleteView(DeleteView):
+    template_name = 'forum/delete_message.html'
+    model = Messages
+
+    def get_success_url(self):
+        return reverse('chat:room_list_view')
+
+class RoomCreateView(CreateView):
+    model = Room
+    fields = ['name','topic','description']
+    template_name = 'forum/room_create.html'
+
+    def get_success_url(self):
+        return reverse('chat:room_list_view')
