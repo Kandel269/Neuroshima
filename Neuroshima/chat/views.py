@@ -43,8 +43,6 @@ class RoomView(View):
         return render(request,self.template_name, {})
 
 class MessagesDeleteView(LoginRequiredMixin,DeleteView):
-    login_url = '/logowanie/'
-    redirect_field_name = 'next'
     template_name = 'forum/delete_message.html'
     model = Messages
 
@@ -52,8 +50,6 @@ class MessagesDeleteView(LoginRequiredMixin,DeleteView):
         return reverse('chat:room_list_view')
 
 class MessagesUpdateView(LoginRequiredMixin,UpdateView):
-    login_url = '/logowanie/'
-    redirect_field_name = 'next'
     model = Messages
     fields = ['body']
     template_name = 'forum/message_update.html'
@@ -62,8 +58,6 @@ class MessagesUpdateView(LoginRequiredMixin,UpdateView):
         return reverse('chat:room_list_view')
 
 class RoomCreateView(LoginRequiredMixin,CreateView):
-    login_url = '/logowanie/'
-    redirect_field_name = 'next'
     form_class = RoomForm
     template_name = 'forum/room_create.html'
 
@@ -84,8 +78,6 @@ class RoomCreateView(LoginRequiredMixin,CreateView):
         return render(request, self.template_name, {'form': form})
 
 class RoomDeleteView(LoginRequiredMixin,DeleteView):
-    login_url = '/logowanie/'
-    redirect_field_name = 'next'
     model = Room
     template_name ='forum/room_delete.html'
 
@@ -93,8 +85,6 @@ class RoomDeleteView(LoginRequiredMixin,DeleteView):
         return reverse('chat:room_list_view')
 
 class RoomUpdateView(LoginRequiredMixin,UpdateView):
-    login_url = '/logowanie/'
-    redirect_field_name = 'next'
     model = Room
     fields = ['name','topic','description']
     template_name =  'forum/room_update.html'
