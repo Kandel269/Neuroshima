@@ -128,7 +128,7 @@ def create_tournament(request):
         form = TournamentForm(request.POST)
         if form.is_valid():
             add_host = form.save(commit = False)
-            add_host.host = request.user
+            add_host.user = request.user
             add_host.save()
             return redirect('home')
 
@@ -271,7 +271,7 @@ def profile_statistics(request):
 
     armies = Armies.objects.all()
 
-    list_score_win_ratio = army_one_man_win_ratio(duels, armies,str(request.user))
+    list_score_win_ratio = army_one_man_win_ratio(duels, armies, str(request.user))
 
     context = {'armies':armies,'list_score_win_ratio':list_score_win_ratio}
     return render(request, 'profile/profile_statistics.html', context)
@@ -303,7 +303,7 @@ def create_tournament(request):
         form = TournamentForm(request.POST)
         if form.is_valid():
             add_host = form.save(commit = False)
-            add_host.host = request.user
+            add_host.user = request.user
             add_host.save()
             return redirect('home')
 
@@ -337,7 +337,7 @@ def TournamentSearchView(request):
 def delete_tournament(request, pk):
     tournament = Tournaments.objects.get(id = pk)
 
-    if request.user != tournament.host:
+    if request.user != tournament.user:
         return HttpResponse('Nie masz zgody od rodziców na przebywanie w tym miejscu')
 
     if request.method == "POST":
@@ -351,7 +351,7 @@ def delete_tournament(request, pk):
 def tournament_settings(request, pk):
     tournament = Tournaments.objects.get(id = pk)
 
-    if request.user != tournament.host:
+    if request.user != tournament.user:
         return HttpResponse('Nie masz zgody od rodziców na przebywanie w tym miejscu')
 
     context = {'tournament':tournament}
@@ -362,7 +362,7 @@ def update_tournmanet(request, pk):
     tournament =Tournaments.objects.get(id = pk)
     form = TournamentForm(instance = tournament)
 
-    if request.user != tournament.host:
+    if request.user != tournament.user:
         return HttpResponse('Mama ci nie pozwoliła!')
 
     if request.method == "POST":

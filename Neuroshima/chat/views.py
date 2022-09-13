@@ -1,10 +1,12 @@
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.views import View
 from django.views.generic import TemplateView, DeleteView, CreateView, UpdateView
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import UserPassesTestMixin
+
 
 from .forms import MessagesForm, RoomForm
 from .models import Room, Messages
@@ -42,22 +44,40 @@ class RoomView(View):
 
         return render(request,self.template_name, {})
 
-class MessagesDeleteView(LoginRequiredMixin,DeleteView):
+class MessagesDeleteView(UserPassesTestMixin, LoginRequiredMixin,DeleteView):
     template_name = 'forum/delete_message.html'
     model = Messages
 
     def get_success_url(self):
         return reverse('chat:room_list_view')
 
-class MessagesUpdateView(LoginRequiredMixin,UpdateView):
+    def test_func(self):
+        return self.request.user == self.get_object().user
+
+    def handle_no_permission(self):
+        return JsonResponse(
+            {'wiadomość': 'Nie możesz usuwać/edytować tego, czego sam nie stworzyłeś!'}
+        )
+
+
+class MessagesUpdateView(UserPassesTestMixin,LoginRequiredMixin,UpdateView):
     model = Messages
     fields = ['body']
     template_name = 'forum/message_update.html'
+
+    def test_func(self):
+        return self.request.user == self.get_object().user
+
+    def handle_no_permission(self):
+        return JsonResponse(
+            {'wiadomość': 'Nie możesz usuwać/edytować tego, czego sam nie stworzyłeś!'}
+        )
 
     def get_success_url(self):
         return reverse('chat:room_list_view')
 
 class RoomCreateView(LoginRequiredMixin,CreateView):
+    # redirect_field_name = 'login'             ### bez tego tez dziala mixin, natomiast zostawiam to gdyby w przyszlosci bylo potrzebne
     form_class = RoomForm
     template_name = 'forum/room_create.html'
 
@@ -72,22 +92,38 @@ class RoomCreateView(LoginRequiredMixin,CreateView):
         form = RoomForm(request.POST)
         if form.is_valid():
             room = form.save(commit = False)
-            room.host = request.user
+            room.user = request.user
             room.save()
             return HttpResponseRedirect(reverse_lazy('chat:room_view', args=[room.id]))
         return render(request, self.template_name, {'form': form})
 
-class RoomDeleteView(LoginRequiredMixin,DeleteView):
+class RoomDeleteView(UserPassesTestMixin, LoginRequiredMixin,DeleteView):
     model = Room
     template_name ='forum/room_delete.html'
 
     def get_success_url(self):
         return reverse('chat:room_list_view')
 
-class RoomUpdateView(LoginRequiredMixin,UpdateView):
+    def test_func(self):
+        return self.request.user == self.get_object().user
+
+    def handle_no_permission(self):
+        return JsonResponse(
+            {'wiadomość': 'Nie możesz usuwać/edytować tego, czego sam nie stworzyłeś!'}
+        )
+
+class RoomUpdateView(UserPassesTestMixin, LoginRequiredMixin,UpdateView):
     model = Room
     fields = ['name','topic','description']
     template_name =  'forum/room_update.html'
 
     def get_success_url(self):
         return reverse('chat:room_list_view')
+
+    def test_func(self):
+        return self.request.user == self.get_object().user
+
+    def handle_no_permission(self):
+        return JsonResponse(
+            {'wiadomość': 'Nie możesz usuwać/edytować tego, czego sam nie stworzyłeś!'}
+        )
