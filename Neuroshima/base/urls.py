@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .api_views import first_api_view
+from .api_views import first_api_view, all_news
 
 urlpatterns = [
     path('', views.home, name = 'home'),
@@ -30,6 +30,7 @@ urlpatterns = [
     path('twoj-profil/ustawienia/', views.profile_settings, name='profile_settings'),
 
     ## rest- api
-    path('api/pierwszy_widok_api/', first_api_view, name = 'first_api')
+    path('api/pierwszy-widok-api/', first_api_view, name = 'first_api'),
+    path('api/wszystkie-wiadomości/', all_news, name = 'all_news'),
 
 ]
