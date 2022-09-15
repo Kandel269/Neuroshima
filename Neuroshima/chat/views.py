@@ -105,7 +105,7 @@ class RoomDeleteView(UserPassesTestMixin, LoginRequiredMixin,DeleteView):
         return reverse('chat:room_list_view')
 
     def test_func(self):
-        return self.request.user == self.get_object().user
+        return self.request.user == self.get_object().host
 
     def handle_no_permission(self):
         return JsonResponse(
@@ -121,7 +121,7 @@ class RoomUpdateView(UserPassesTestMixin, LoginRequiredMixin,UpdateView):
         return reverse('chat:room_list_view')
 
     def test_func(self):
-        return self.request.user == self.get_object().user
+        return self.request.user == self.get_object().host
 
     def handle_no_permission(self):
         return JsonResponse(

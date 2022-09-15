@@ -337,7 +337,7 @@ def TournamentSearchView(request):
 def delete_tournament(request, pk):
     tournament = Tournaments.objects.get(id = pk)
 
-    if request.user != tournament.user:
+    if request.user != tournament.host:
         return HttpResponse('Nie masz zgody od rodziców na przebywanie w tym miejscu')
 
     if request.method == "POST":
@@ -351,7 +351,7 @@ def delete_tournament(request, pk):
 def tournament_settings(request, pk):
     tournament = Tournaments.objects.get(id = pk)
 
-    if request.user != tournament.user:
+    if request.user != tournament.host:
         return HttpResponse('Nie masz zgody od rodziców na przebywanie w tym miejscu')
 
     context = {'tournament':tournament}
@@ -362,7 +362,7 @@ def update_tournmanet(request, pk):
     tournament =Tournaments.objects.get(id = pk)
     form = TournamentForm(instance = tournament)
 
-    if request.user != tournament.user:
+    if request.user != tournament.host:
         return HttpResponse('Mama ci nie pozwoliła!')
 
     if request.method == "POST":

@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from .api_views import first_api_view
 
 urlpatterns = [
     path('', views.home, name = 'home'),
@@ -27,5 +28,8 @@ urlpatterns = [
     path('twoj-profil/historia-pojedynków/', views.history_of_duels, name='history_of_duels'),
     path('twoj-profil/statystyki/', views.profile_statistics, name='profile_statistics'),
     path('twoj-profil/ustawienia/', views.profile_settings, name='profile_settings'),
+
+    ## rest- api
+    path('api/pierwszy_widok_api/', first_api_view, name = 'first_api')
 
 ]

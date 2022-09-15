@@ -16,8 +16,8 @@
         {% for message in messages %}
             <small>@{{message.user}}   {{message.data_create|timesince}} </small>
             {% if message.user == request.user %}
-                <small><a href = "{% url 'chat:delete_message' message.id room.id %}">usuń wiadomość</a></small>
-                <small><a href = "{% url 'chat:update_message' message.id room.id %}">edytuj</a></small>
+                <small><a href = "{% url 'chat:delete_message' message.id %}">usuń wiadomość</a></small>
+                <small><a href = "{% url 'chat:update_message' message.id %}">edytuj</a></small>
             {% endif %}
             <p>{{message.body}}</p>
             <hr>
