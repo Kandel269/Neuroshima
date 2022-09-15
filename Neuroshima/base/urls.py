@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .api_views import first_api_view, all_news
+from .api_views import first_api_view, AllNews, AllArmies
 
 urlpatterns = [
     path('', views.home, name = 'home'),
@@ -31,6 +31,7 @@ urlpatterns = [
 
     ## rest- api
     path('api/pierwszy-widok-api/', first_api_view, name = 'first_api'),
-    path('api/wszystkie-wiadomości/', all_news, name = 'all_news'),
+    path('api/wszystkie-wiadomości/', AllNews.as_view(), name = 'all_news'),
+    path('api/wszystkie-armie/', AllArmies.as_view(), name = 'all_armies'),
 
 ]
