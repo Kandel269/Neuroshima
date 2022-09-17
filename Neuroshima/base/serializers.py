@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import Armies
 
+
 class NewsSerializer(serializers.Serializer):
     title = serializers.CharField()
     description = serializers.CharField()
@@ -11,3 +12,4 @@ class ArmiesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Armies
         fields = ['name']
+
