@@ -23,3 +23,4 @@ if __name__ == '__main__':
     filename = 'sample_output.csv'
     write_csv(filename,header,data)
 
+## Jakos dziwnie to zapisuje, moze kwestia tego, ze mam wersje probna excela i zle zaczytuje, nwm
