@@ -1,7 +1,10 @@
 import os
 
-GTK_FOLDER = r'C:\Program Files\GTK3-Runtime Win64\bin'
-os.environ['PATH'] = GTK_FOLDER + os.pathsep + os.environ.get('PATH', '')
+try:
+    GTK_FOLDER = r'C:\Program Files\GTK3-Runtime Win64\bin'
+    os.environ['PATH'] = GTK_FOLDER + os.pathsep + os.environ.get('PATH', '')
+except:
+    pass
 
 from weasyprint import HTML, CSS
 

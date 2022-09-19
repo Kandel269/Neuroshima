@@ -1,5 +1,3 @@
-import os
-
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
@@ -9,11 +7,13 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.conf import settings
 
+
 from PIL import Image
 
 from .calculator import army_win_ratio, army_one_man_win_ratio
 from .models import Tournaments, Duels, Armies, DuelUser, News, Profile
 from .forms import TournamentForm, DuelsUserForm, ProfileForm
+
 
 # Create your views here.
 
@@ -373,6 +373,7 @@ def update_tournmanet(request, pk):
 
     context = {'form': form,'tournament':tournament}
     return render(request, 'tournament/tournament_edit.html', context)
+
 
 
 

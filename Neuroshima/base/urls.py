@@ -2,6 +2,7 @@ from django.urls import path
 from . import views
 from .api_views import first_api_view, AllNews, AllArmies, Login
 
+
 urlpatterns = [
     path('', views.home, name = 'home'),
     path('lista-turniejow', views.tournaments_list, name = 'tournaments_list'),
@@ -34,5 +35,6 @@ urlpatterns = [
     path('api/pierwszy-widok-api/', first_api_view, name = 'first_api'),
     path('api/wszystkie-wiadomosci/', AllNews.as_view(), name = 'all_news'),
     path('api/wszystkie-armie/', AllArmies.as_view(), name = 'all_armies'),
+
 
 ]
