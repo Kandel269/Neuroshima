@@ -3,4 +3,7 @@
 Python 3.x
 Django 4
 
-App for gamers (Neuroshima hex 3.0 board game)
+Aplikacja nie jest skończona.
+Stworzona z myśą o graczach Neuroshimy hex 3.0. 
+Załóż konto i zaloguj się, aby odblokować dużo więcej funkcji.
+Aplikacja tworzona głównie od strony backendu
